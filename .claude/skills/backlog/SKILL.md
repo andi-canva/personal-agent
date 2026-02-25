@@ -1,5 +1,5 @@
 ---
-name: process-backlog
+name: backlog
 description: "Triage the BACKLOG.md inbox — extract items, enrich with context, create task files, clear the backlog"
 ---
 
@@ -9,7 +9,7 @@ Triage the raw capture inbox (`BACKLOG.md`) into structured, goal-aligned task f
 
 ## Instructions
 
-When the user invokes `/process-backlog` (or says "clear my backlog", "process backlog", etc.), run through all steps in sequence.
+When the user invokes `/backlog` (or says "clear my backlog", "process backlog", etc.), run through all steps in sequence.
 
 ### Step 1: Read the Backlog
 
@@ -81,7 +81,7 @@ resource_refs:
 ```markdown
 # Backlog
 
-Drop raw notes or todos here. Say `/process-backlog` when you're ready for triage.
+Drop raw notes or todos here. Say `/backlog` when you're ready for triage.
 ```
 
 ## Output Format

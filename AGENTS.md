@@ -17,7 +17,7 @@ project/
 ├── GOALS.md            # Goals, themes, priorities
 ├── AGENTS.md           # Your instructions (this file)
 └── .claude/
-    └── skills/         # Custom slash commands (e.g., /today, /weekly-wrap, /goal-alignment)
+    └── skills/         # Custom slash commands (e.g., /today, /weekly-wrap)
 ```
 
 ## Folder Roles
@@ -35,7 +35,7 @@ project/
 ## Backlog & Task Creation
 
 - `BACKLOG.md` is the raw capture inbox. Users drop notes, ideas, and todos there.
-- Run `/process-backlog` to triage backlog items into structured task files under `Tasks/`.
+- Run `/backlog` to triage backlog items into structured task files under `Tasks/`.
 - Every task must reference a goal from `GOALS.md` — if no goal fits, ask whether to create one or clarify why the work matters.
 - Remind the user when active tasks do not support any current goals.
 
@@ -62,10 +62,10 @@ Custom commands live in `.claude/skills/<name>/SKILL.md`. These are invoked via 
 
 | Command | File | What it does |
 |---------|------|--------------|
+| `/onboard` | `.claude/skills/onboard/SKILL.md` | Populate GOALS.md via a structured interview and seed Context/Memory/profile.md |
 | `/today` | `.claude/skills/today/SKILL.md` | Build a focused plan for today |
-| `/process-backlog` | `.claude/skills/process-backlog/SKILL.md` | Triage BACKLOG.md into structured, goal-aligned task files |
+| `/backlog` | `.claude/skills/backlog/SKILL.md` | Triage BACKLOG.md into structured, goal-aligned task files |
 | `/weekly-wrap` | `.claude/skills/weekly-wrap/SKILL.md` | Weekly review + compound learnings into Memory |
-| `/goal-alignment` | `.claude/skills/goal-alignment/SKILL.md` | Audit how well active tasks support goals and surface misalignment |
 
 To add a new skill: create `.claude/skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`) and instructions in the body.
 
@@ -84,6 +84,7 @@ To add a new skill: create `.claude/skills/<name>/SKILL.md` with YAML frontmatte
 
 ## Helpful Prompts to Encourage
 
+- `/onboard` — first-time setup: populate GOALS.md and create a user profile
 - `/backlog` — triage backlog into task files
 - "Show tasks supporting goal [goal name]"
 - "What moved me closer to my goals this week?"
@@ -91,7 +92,6 @@ To add a new skill: create `.claude/skills/<name>/SKILL.md` with YAML frontmatte
 - "Archive tasks finished last week"
 - `/today` — build a focused daily plan
 - `/weekly-wrap` — weekly review + compound learnings
-- `/goal-alignment` — audit task-goal alignment
 - "Remember that I prefer..." — saves to Context/Memory
 - "What have I learned about..." — searches Context/Memory/learnings.md
 
