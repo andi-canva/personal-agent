@@ -1,0 +1,28 @@
+# Personal data (keep private)
+Tasks/*.md
+!Tasks/README.md
+Notes/*.md
+Context/Memory/*.md
+Context/Document Hub/*.md
+Context/Meeting Notes/*.md
+Context/Progress Updates/*.md
+Bookmarks/*.md
+GOALS.md
+BACKLOG.md
+
+# IDE & Editor configs
+.vscode/
+.idea/
+.obsidian/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Tool-specific
+.specstory/
+.factory/
+
+# Logs
+*.log
+logs/
