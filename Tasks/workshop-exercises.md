@@ -10,7 +10,13 @@ tags:
 
 # Workshop Exercises
 
-Tick each exercise as you complete it. Work through 1–9 during the workshop, then 10–12 at your own pace.
+## Where This Fits
+
+You've seen what Cowork can do — connectors, sub-agents, skills, Chrome, local files. That's Claude with hands. This workshop shows you how to give it a brain. Cowork without context is a capable stranger. Cowork with this workspace is a co-pilot that knows your goals, remembers your decisions, and gets better every week. Everything here is complementary — you keep all of Cowork's power and add persistent memory, goal alignment, and a compounding loop on top.
+
+---
+
+Tick each exercise as you complete it. Work through 1–10 during the workshop, then 11–14 at your own pace.
 
 ## Progress
 
@@ -19,16 +25,19 @@ Tick each exercise as you complete it. Work through 1–9 during the workshop, t
 - [ ] 02 · Understand agent capabilities
 - [ ] 03 · Discover connected tools (MCPs)
 - [ ] 04 · Combine tools across systems
-- [ ] 05 · Bootstrap your GOALS.md ⭐
-- [ ] 06 · Goals-driven prioritization workout ⭐
-- [ ] 07 · Run the /today skill
-- [ ] 08 · Set up the compounding loop
-- [ ] 09 · Full co-pilot test — 1:1 prep
+- [ ] 05 · Bootstrap your GOALS.md
+- [ ] 06 · Goals-driven prioritization workout
+- [ ] 07 · Plan your week with /plan-week
+- [ ] 08 · Run /today against the weekly plan
+- [ ] 09 · Use /121 to prep for a 1:1
+- [ ] 10 · Set up the compounding loop
 
 ### After the workshop
-- [ ] 10 · Seed your Context folder
-- [ ] 11 · Build a custom skill
-- [ ] 12 · Use your co-pilot for one full work day
+- [ ] 11 · Try /draft and /unblock
+- [ ] 12 · Seed your Context folder
+- [ ] 13 · Build a custom skill
+- [ ] 14 · Use your co-pilot for one full work week
+- [ ] 15 · Compare blank Cowork vs harnessed (optional)
 
 ---
 
@@ -36,7 +45,7 @@ Tick each exercise as you complete it. Work through 1–9 during the workshop, t
 **Section 0 — Setup · Slide 6 · ~5 min**
 
 - Open Claude Code Desktop
-- Go to **File → Open Folder** and select this `personal-agent` folder
+- Go to **File > Open Folder** and select this `personal-agent` folder
 - Quick tour of the UI: models picker, + button (tools & skills), mode selector (plan, ask, auto)
 - Type this prompt:
 
@@ -56,15 +65,18 @@ Tick each exercise as you complete it. Work through 1–9 during the workshop, t
 > "What's the difference between using you in a chat window versus using you here in Claude Code Desktop? What can you do here that you can't do there?"
 
 - Read the response carefully
+- Now try this follow-up:
 
-**What to notice:** Notice what it says about file access, tool use, and workspace persistence. The agent is explaining its own capabilities — demonstrating self-awareness about its environment. Watch for the moment you realize: "Wait, it can actually read my files?"
+> "What do you know about me right now? What's in my GOALS.md? How does that change what you'd suggest compared to a blank Cowork session?"
+
+**What to notice:** The first prompt shows you what the agent *can do* (file access, tool use, workspace persistence). The second shows you what it *already knows* — because this workspace gives it persistent context that a blank Cowork session doesn't have. That's the difference between capability and usefulness.
 
 ---
 
 ## 03 · Discover Connected Tools (MCPs)
 **Section 2 — Tools & MCPs · Slide 15 · ~10 min**
 
-- Check your MCP connections: go to **Settings → MCP Servers** and see what's listed
+- Check your MCP connections: go to **Settings > MCP Servers** and see what's listed
 - Discover what's available. Type:
 
 > "What tools do you have access to? List them for me."
@@ -98,13 +110,13 @@ or:
 
 ---
 
-## 05 · Bootstrap Your GOALS.md ⭐
+## 05 · Bootstrap Your GOALS.md
 **Section 3 — Context & Memory · Slide 18 · ~15 min**
 
 This is the core context exercise.
 
 - **Step 1 — Get your starting context from ChatGPT:**
-  - Open ChatGPT App → Personalisation → Memory
+  - Open ChatGPT App > Personalisation > Memory
   - Read out one surprising thing it knows about you (keep it SFW)
   - Paste this prompt into ChatGPT:
 
@@ -131,9 +143,11 @@ This is the core context exercise.
 
 **What to notice:** This is where context meets tools. The agent enriches your context file with data from Confluence and Slack — a GOALS.md richer than what you could write from memory alone. This is composability in action.
 
+> **Why not just tell Cowork your goals each time?** Because there's no memory across Cowork sessions. A structured `GOALS.md` file means every new session already knows what you're working toward — without you repeating yourself. You write it once, and every `/today`, every prioritization question, every weekly review references it automatically.
+
 ---
 
-## 06 · Goals-Driven Prioritization Workout ⭐
+## 06 · Goals-Driven Prioritization Workout
 **Section 3 — Context & Memory · Slide 21 · ~15 min**
 
 Progressive prompts that build on each other. Try them in order:
@@ -160,58 +174,124 @@ Progressive prompts that build on each other. Try them in order:
 
 ---
 
-## 07 · Run the /today Skill
-**Section 4 — Skills · Slide 26 · ~10 min**
+## 07 · Plan Your Week with /plan-week
+**Section 4 — Skills & Planning Loop · Slide 26 · ~10 min**
 
-- Run the pre-built skill. Type:
+This exercise introduces the weekly planning loop. There's an example week already in your workspace — let's look at it first, then build your own.
+
+- **Step 1 — Explore the example week:**
+
+> "Read Tasks/Week-2026-W02.md. Walk me through what this file is — how is it structured, what's filled in, what isn't, and how would /today use it?"
+
+- Notice how Monday and Tuesday are "lived" (checkboxes ticked, meeting notes, decisions logged) while Wednesday–Friday are still just planned
+- This is the scratchpad that `/today` reads every morning and fills in as the day unfolds
+
+- **Step 2 — Now plan YOUR week.** Run:
+
+> /plan-week
+
+- Watch the agent pull your GOALS.md, active tasks, and calendar to build a full week plan
+- It will ask you to confirm before writing the file
+- Once confirmed, you'll have your own `Tasks/Week-YYYY-WNN.md` with all 5 days pre-populated
+
+**What to notice:** `/plan-week` doesn't just list tasks — it triages your meetings (keep/drop/delegate/defer), maps daily themes to goals, and defines what "success looks like" by Friday. The output is a decision-making artifact, not a to-do list.
+
+---
+
+## 08 · Run /today Against the Weekly Plan
+**Section 4 — Skills & Planning Loop · Slide 28 · ~10 min**
+
+Now see how `/today` reads from the weekly plan and builds a daily briefing.
+
+- **Step 1 — Try it on the example week first.** Type:
+
+> "Pretend it's Wednesday January 7, 2026. Read Tasks/Week-2026-W02.md and build me a daily briefing for today. What did Monday and Tuesday accomplish? What should Wednesday focus on? Are there any rolled-forward items?"
+
+- Watch the agent reconcile what was planned vs what actually happened
+- Notice it picks up that the budget approval is still unresolved from Monday, and Sarah's feedback needs to be acted on
+
+- **Step 2 — Now run it for real on YOUR week:**
 
 > /today
 
-- Watch your agent synthesize your goals, recent activity, and context files into a focused daily plan
-- Now try a variation — add a constraint:
+- The agent reads your actual weekly plan, checks connected tools for overnight signals, and builds a 3-item focus plan
+- Try adding a constraint:
 
 > "Actually, I have a dentist appointment at 2pm. Adjust the plan."
 
 - Watch the agent re-plan around the constraint
 
-**What to notice:** Skills aren't rigid scripts — they reason and adapt. Instead of typing a long prompt every time, you type `/today`. And because it reads your context files every time, it automatically adapts as your priorities change.
+**What to notice:** The planning loop is: `/plan-week` on Monday sets the frame, `/today` each morning reads from it, reconciles reality, and updates the scratchpad. Over the week, the file becomes a living record of what actually happened — not just what was planned.
 
 ---
 
-## 08 · Set Up the Compounding Loop
-**Section 5 — Orchestration & Compounding · Slide 31 · ~5 min**
+## 09 · Use /121 to Prep for a 1:1
+**Section 5 — Capstone Skills · Slide 32 · ~10 min**
+
+Use everything you've built — goals, context, connected tools — to prep for a real meeting.
+
+- **Step 1 — Run the skill:**
+
+> /121 [your manager's name]
+
+- Watch the agent search your meeting notes, tasks, goals, and Slack for context about this person
+- It generates three sections: **updates to share**, **questions to ask**, and **strategic topics**
+- It also flags any open loops from previous conversations
+
+- **Step 2 — Try a variation with someone else:**
+
+> /121 [a direct report or peer you meet with regularly]
+
+- Compare the outputs — the agent adapts based on the relationship context it finds
+
+**What to notice:** The agent isn't generating generic talking points — it's reasoning about *your* specific goals, *your* recent work, and *your* history with this person. This is what "agent-native" feels like from the inside.
+
+---
+
+## 10 · Set Up the Compounding Loop
+**Section 5 — Orchestration & Compounding · Slide 35 · ~5 min**
 
 - Run the weekly wrap skill to see how learnings get compounded:
 
 > /weekly-wrap
 
-- Watch Step 5 — the agent distills the week's work into insights and saves them to `Context/Memory/learnings.md`
-- Review what it wrote — these are the compounded learnings that future sessions will reference
+- Watch the agent review the week, produce a shareable status update, and distill learnings
+- It saves insights to `Context/Memory/learnings.md` — future sessions will reference these automatically
+- Review the shareable update (~200 words) — you could send this to your manager as-is
 - If you want to capture something mid-week, just say:
 
 > "Remember that [your insight here]"
 
-**What to notice:** `/weekly-wrap` doesn't just review — it compounds. Each week's distilled insights are stored in Memory so future sessions build on past knowledge without context bloat. Better context → better output → more learnings → even better context.
+**What to notice:** `/weekly-wrap` doesn't just review — it compounds. Each week's distilled insights are stored in Memory so future sessions build on past knowledge without context bloat. Better context, better output, more learnings, even better context.
+
+> **This is what Cowork can't do alone.** Each `/weekly-wrap` distills insights into `Context/Memory/learnings.md`. Next week's sessions reference last week's lessons automatically. That's not a feature of Cowork — it's a feature of this workspace structure. Your agent after 4 weeks is meaningfully better than on day one.
 
 ---
 
-## 09 · Full Co-Pilot Test — 1:1 Prep
-**Section 5 — Capstone · Slide 32 · ~10 min**
+## 11 · Try /draft and /unblock
+**Take-home · ~10 min**
 
-Final challenge — use everything you've built.
+Two more skills that show how context changes everything.
 
-- Type:
+- **Draft something in your voice:**
 
-> "I have a 1:1 with my manager tomorrow. Based on my goals, recent work, and current priorities, help me prepare talking points. What should I bring up? What should I ask for?"
+> /draft [a Slack message to your team about Q1 priorities]
 
-- Watch the agent pull from everything: GOALS.md, Context/, connected tools, CLAUDE.md
-- Share your results with your group
+- The agent checks your Context/Memory for voice preferences and writes like you, not like generic AI
+- Ask it to adjust: "more casual" / "shorter" / "more direct"
 
-**What to notice:** The agent isn't generating generic talking points — it's reasoning about *your* specific goals, *your* recent work, *your* team dynamics. This is what "agent-native" feels like from the inside.
+- **Unblock a stalled task:**
+
+> /unblock
+
+- The agent scans your Tasks/ folder for the most obviously stalled item
+- It diagnoses *why* it's stuck (never started? too big? waiting on someone?) and suggests one concrete next action — not a plan, just the smallest thing to do in the next 15 minutes
+
+**What to notice:** Both skills read your workspace context. `/draft` writes differently for different audiences because it knows your goals and relationships. `/unblock` doesn't just say "break it down" — it looks at the specific task and gives a specific action.
 
 ---
 
-## 10 · Seed Your Context Folder
+## 12 · Seed Your Context Folder
 **Take-home · ~30 min**
 
 - Type this prompt:
@@ -225,7 +305,7 @@ Final challenge — use everything you've built.
 
 ---
 
-## 11 · Build a Custom Skill
+## 13 · Build a Custom Skill
 **Take-home · ~15 min**
 
 - Think of a workflow you do repeatedly (meeting prep, status update, brainstorm, etc.)
@@ -236,16 +316,38 @@ Final challenge — use everything you've built.
 - Review the skill file — does it reference the right files? Use the right tools?
 - Test it by running `/[your-skill-name]`
 
-**Skill ideas:** `/prep-meeting [person]` · `/status-update` · `/brainstorm [topic]` · `/draft-comms [topic]`
+**Skill ideas:** `/status-update` · `/brainstorm [topic]` · `/retro` · `/prep-meeting [person]`
 
 ---
 
-## 12 · Use Your Co-Pilot for One Full Work Day
+## 14 · Use Your Co-Pilot for One Full Work Week
 **Take-home · The real challenge**
 
-- **Morning:** Run `/today` to build your daily plan
-- **During work:** Let the agent help you prep for meetings, draft messages, research topics
-- **Between tasks:** Brain dump into BACKLOG.md, then say "process my backlog"
-- **End of week:** Run `/weekly-wrap` — it reviews your work AND compounds learnings into Memory
+The planning loop in practice:
 
-**What to notice:** After a full day, your Context/ folder will be richer and your agent will know you better. After a week, you'll have a visceral understanding of what agent-native means — because you lived it.
+- **Monday morning:** Run `/plan-week` to set the full week — priorities, meeting triage, daily themes
+- **Every morning:** Run `/today` to get your daily briefing (it reads from the weekly plan)
+- **During work:** Let the agent help you prep for meetings (`/121`), draft messages (`/draft`), unblock tasks (`/unblock`)
+- **Between tasks:** Brain dump into BACKLOG.md, then run `/backlog` to triage
+- **Friday:** Run `/weekly-wrap` — it reviews the week, produces a shareable update, and compounds learnings
+
+After one full week, your `Context/Memory/learnings.md` will have its first real entries. Your weekly scratchpad will be a record of what actually happened. And your agent will be meaningfully better for next week.
+
+---
+
+## 15 · Compare Blank Cowork vs Harnessed (Optional)
+**Take-home · ~10 min**
+
+See the difference for yourself.
+
+- **Step 1:** Open a fresh Cowork session (no workspace selected) and ask:
+
+> "What should I focus on today? Help me plan my day."
+
+- **Step 2:** Come back to this workspace and run:
+
+> /today
+
+- **Step 3:** Compare the two outputs side by side
+
+**What to notice:** The blank session gives you a generic productivity template. The harnessed session gives you a plan grounded in YOUR goals, YOUR recent work, and YOUR accumulated learnings. Same agent, same model, same capabilities — the only difference is the structured context this workspace provides. That's what "complementary" means in practice.

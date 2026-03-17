@@ -5,72 +5,169 @@ description: "Weekly review + compound learnings — review progress, surface bl
 
 # Weekly Wrap
 
-Run a structured weekly review, then distill the week's learnings into compounded knowledge that future sessions can reference.
+Run a structured weekly review, produce a shareable status update, then distill learnings into compounded knowledge.
 
 ## Instructions
 
-When the user invokes `/weekly-wrap`, run through all 5 steps in sequence without waiting for prompts between them. Be concise and data-driven.
+When the user invokes `/weekly-wrap`, run all steps in sequence **without waiting for prompts between them**. Produce the final shareable update, learnings, and next-week focus in a single pass. Save everything, then confirm.
 
-### Step 1: Review Completed Work
+**Do NOT stop to ask for confirmation between steps.** The user will correct anything after seeing the full output.
 
-1. Read all task files in `Tasks/Done/` and `Tasks/` where `status: d`
-2. Group completed tasks by which goal they support (reference `GOALS.md`)
-3. Summarize:
-   - Total tasks completed
-   - Breakdown by goal alignment
-   - Highlights (any P0/P1 completions)
-   - Tasks completed that didn't align to any goal (flag these)
+---
 
-### Step 2: Check Goal Progress
+### Step 1: Gather the Week's Raw Material
 
-1. Read `GOALS.md` — especially quarterly objectives and top 3 priorities
-2. For each goal/objective, assess progress based on completed and remaining tasks
-3. Present a table:
+Pull everything from the target week before synthesising anything.
 
-| Goal | Status | Notes |
-|------|--------|-------|
-| [goal] | :large_green_circle: / :yellow_circle: / :red_circle: | [what moved, what didn't] |
+1. **Weekly scratchpad** — read `Tasks/Week-YYYY-WNN.md` (ISO week number)
+   - Count ticked `[x]` vs unticked `[ ]` items across all daily sections
+   - Extract all free-form notes, decisions, and meeting entries from Notes sections
+   - Note which days had entries
+2. **Meeting notes** — scan `Context/Meeting Notes/` for files dated this week
+   - Extract: attendee names, decisions made, action items with owners, blockers raised
+3. **Task files** — read `Tasks/` root for `status: d` (done this week) and `status: b` (blocked)
+   - Also scan `Tasks/Backlog/` to assess initiative-level progress beyond individual task completions — flag any track that has had no slice activity this week
+   - Also flag `status: s` with no progress log entry in the last 7 days (stalled)
+4. **Goals** — read `GOALS.md` for quarterly objectives and top 3 priorities
+5. **Prior wrap** — read the most recent file in `Context/Progress Updates/` to compare trajectory
+6. **Connected tools** — if Slack, email, or project tools are available via MCP, pull the week's key activity:
+   - Decisions in threads, action items, blockers, escalations, announcements
+   - If tools are unavailable, note this and proceed — don't block the wrap
 
-4. Call out any goal with zero task activity this week
+---
 
-### Step 3: Surface Blockers & Stalled Work
+### Step 2: Internal Review (not shown to user)
 
-1. Scan `Tasks/` for `status: b` (blocked) — list each with how long it's been blocked
-2. Scan for `status: s` (started) with no progress log entry in the last 7 days — flag as stalled
-3. For each blocked/stalled item, suggest a concrete next step or follow-up question
+Before writing the status update, do this analysis privately:
 
-### Step 4: Recommend Next Week's Focus
+- Map completed work to goals — which goals moved, which didn't
+- Identify the 4-6 most significant things that happened (decisions, deliverables, meetings, shifts)
+- List every blocker and stalled item with owner and how long it's been stuck
+- Pull specific names from meeting notes for action items
+- If `Context/Memory/bias.md` exists, check against bias patterns — did any show up this week?
 
-1. Based on goal gaps, blockers, and priority levels, suggest:
-   - **Must do** (P0/P1): up to 3 items
-   - **Should do** (P2): up to 3 items
-   - **If time allows**: remaining items worth attention
-2. Flag if the suggested plan doesn't cover all active goals
-3. Ask: "Does this feel right, or should we adjust?"
+---
+
+### Step 3: Write the Weekly Status Update
+
+**Produce ONLY the short, shareable version directly.** No long draft first. Target ~200 words. Use simple language.
+
+Use this structure:
+
+```
+# Weekly Update CW[XX] — [DD–DD Mon YYYY]
+
+**In short:**
+[2-3 sentences: what happened, what succeeded, what's blocked. Plain English, data where useful.]
+
+## What happened
+- [Thing that moved — who was involved, what was decided]
+- [Thing that moved — who was involved, what was decided]
+- [Thing that moved — who was involved, what was decided]
+(4-5 bullets max. Only things that actually moved.)
+
+## What's next
+- [Next action — who owns it, rough timing]
+- [Next action — who owns it, rough timing]
+- [Next action — who owns it, rough timing]
+```
+
+**Tone rules:**
+- Simple, direct language — as if explaining to a smart colleague over coffee
+- Data where it adds clarity, not decoration
+- Specific names, not "the team" or "stakeholders"
+- Optimistic framing — what moved, not what failed
+
+---
+
+### Step 4: Write the Full Wrap (internal detail, appended below the shareable update)
+
+After the shareable update, append these sections for the saved wrap file:
+
+```
+## Status Check
+| Initiative | Status | Notes |
+|------------|--------|-------|
+| [goal/initiative] | On track / At risk / Blocked / Paused | [short note] |
+
+## CW[XX+1] Focus
+
+**Must do:**
+1. [item] — Goal: [which goal]
+2. ...
+
+**Should do:**
+1. [item]
+2. ...
+
+**Watch:**
+- [anything at risk]
+
+## Learnings (saved to Memory)
+- [3-5 bullet learnings — insights, patterns, bias flags]
+
+## System Health
+- [files missing descriptions, index freshness]
+```
+
+Flag if any active quarterly objective has had zero activity two weeks running.
+
+---
 
 ### Step 5: Compound Learnings into Memory
 
-This is the compounding step — distill the week into durable knowledge.
+Distill the week into durable knowledge for future sessions.
 
-1. Review everything from Steps 1-4: completed work, goal progress, blockers, conversations in `Notes/`, and any new files in `Context/`
-2. Read `Context/Memory/learnings.md` to understand what's already been captured — avoid repeating existing insights
-3. Extract and distill:
-   - **Insights**: What worked well this week? What didn't? Why?
-   - **Patterns**: Any recurring themes across tasks, blockers, or decisions?
-   - **Decisions**: Key choices made and the reasoning — so future sessions understand the "why"
-   - **Principles**: If something keeps coming up, promote it to a reusable principle
-4. Append a new dated section to `Context/Memory/learnings.md` with the distilled learnings
-5. Keep entries **concise and actionable** — 3-7 bullet points max. This is a summary, not a journal. The goal is compounding knowledge without context bloat.
-6. Present the learnings to the user before saving and ask: "Anything to add or adjust before I save this?"
+1. Read `Context/Memory/learnings.md` — avoid repeating what's already captured
+2. Extract 3-5 learnings:
+   - **Insights**: what worked, what didn't, and why (evidence-backed)
+   - **Patterns**: recurring themes across tasks, blockers, or decisions
+   - **Bias flags**: if a bias pattern appeared this week, name it and note context
+   - If something keeps recurring across multiple wraps, promote it to a standing principle
+3. **Save directly** — append a new dated section to `Context/Memory/learnings.md` (3-5 bullets max)
+4. Do NOT ask for confirmation — save and show what was added in the output
 
 ### Compounding Principle
 
-Each weekly wrap should make the next one better:
-- Reference prior learnings when assessing this week ("Last week we learned X — did that hold up?")
+Each wrap should make the next one better:
+- Reference prior learnings when assessing this week
 - Promote repeated patterns into standing principles
-- Prune or update stale learnings that no longer apply
-- The learnings file should stay lean — if it grows past ~50 entries, suggest consolidating older entries into higher-level principles
+- Prune stale learnings that no longer apply
+- If `learnings.md` grows past ~50 entries, suggest consolidating into higher-level principles
 
-## Output Format
+---
 
-Use clear headers for each step. Keep the whole review scannable — no walls of text. Use tables and bullet points. The learnings section should feel like a crisp executive summary, not meeting minutes.
+### Step 6: System Health & Kanban Sync
+
+1. Run a quick check:
+   - Count active task files (Tasks/ root, not Done/) missing `description` field
+   - Report in the wrap: "System health: X files need enrichment."
+
+2. Kanban sync:
+   - Move completed tasks (`status: d`) from "In Progress" to "Done" in `Weekly Kanban.md`
+   - Mark done items with `[x]` in the Kanban
+
+3. **Promotion check** — for each completed task, check if it produced promotable outputs:
+   - Strategy docs, decision records → flag for `Context/Document Hub/`
+   - Frameworks, playbooks → flag for `Context/`
+   - Report: "Promotable outputs: [list with suggested destinations]" — let the user confirm before promoting
+
+---
+
+### Step 7: Save the Wrap
+
+Save the full wrap (shareable update + internal detail sections) to `Context/Progress Updates/`.
+
+Use a consistent naming convention: `CW[XX]-YYYY.md` (e.g. `CW11-2026.md`).
+
+If a file for this CW already exists, append the new wrap at the top (most recent first) rather than overwriting.
+
+Confirm: *"Saved to `Context/Progress Updates/CW[XX]-YYYY.md`. Learnings appended to Memory."*
+
+---
+
+## Key Principle: No Mid-Flow Prompts
+
+The entire wrap — shareable update, internal detail, learnings save, system health, and file save — runs as one uninterrupted pass. The user reviews the complete output and provides corrections after, not during. This eliminates back-and-forth rounds.
+
+If any external tool is unavailable, note it and continue. Never block the wrap waiting for a tool.

@@ -36,17 +36,24 @@ When the user invokes `/backlog` (or says "clear my backlog", "process backlog",
 
 ### Step 5: Create Task Files
 
-1. Create a new markdown file in `Tasks/` for each triaged item using this template:
+Decide where each item belongs:
+
+- **(a) New initiative/track**: if the item is a multi-step initiative that needs strategic context, decisions, and frameworks — create a context file in `Tasks/Backlog/` with background and decisions, then create initial actionable slices in `Tasks/` root
+- **(b) Standalone task**: if it's a single actionable item — create directly in `Tasks/` root
+
+Create each task using this template:
 
 ```yaml
 ---
 title: [Actionable task name]
+description: "[~150 chars — retrieval filter for what makes this task distinctive]"
+type: task
 category: [technical|outreach|research|writing|content|admin|personal|other]
+topics: ["topic-1", "topic-2"]  # relevant tags for this task
 priority: [P0|P1|P2|P3]
 status: n
 created_date: [YYYY-MM-DD]
 due_date: [YYYY-MM-DD]  # optional
-estimated_time: [minutes]  # optional
 resource_refs:
   - Context/relevant-file.md
 ---
@@ -64,7 +71,9 @@ resource_refs:
 - YYYY-MM-DD: Created from backlog.
 ```
 
-2. Each task **must** reference a goal in its Context section. If no goal fits, flag it and ask whether to create a new goal entry or clarify why the work matters.
+Each task **must**:
+- Reference a goal in its Context section. If no goal fits, flag it and ask whether to create a new goal entry or clarify why the work matters.
+- Have a `description` and `topics` field — follow the Discovery-First Principle.
 
 ### Step 6: Summarize and Clear
 
@@ -75,14 +84,30 @@ resource_refs:
 | [name] | P1 | [goal ref] | Created / Updated existing |
 
 2. Flag any items that don't align to a current goal
-3. Ask: "Ready to clear the backlog?"
-4. On confirmation, clear `BACKLOG.md` back to its default state:
+3. **Kanban sync**: For each new task, append a Kanban entry to `Weekly Kanban.md` under the "Backlog" column: `- [ ] [[Task Name]] — one-line summary #priority`
+4. Ask: "Ready to clear the backlog?"
+5. On confirmation, clear `BACKLOG.md` back to its default state:
 
 ```markdown
 # Backlog
 
 Drop raw notes or todos here. Say `/backlog` when you're ready for triage.
 ```
+
+### Step 7: Compound-on-Touch (silent)
+
+After processing and clearing the backlog:
+
+1. **Recurring items** — if a similar item has appeared in the backlog 3+ times (check `Context/Memory/learnings.md` and prior task files), flag the pattern and suggest a standing task or process change. Append to learnings:
+   ```
+   ## [date]
+   - [pattern — e.g., "Third time 'update stakeholders on X' appeared in backlog — consider a recurring weekly task"]
+   ```
+2. **Missing metadata** — enrich any task files you touched that lack `description`
+
+Do NOT announce these fixes. Just do them.
+
+---
 
 ## Output Format
 

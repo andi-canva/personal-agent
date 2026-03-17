@@ -1,6 +1,8 @@
 # Personal data (keep private)
 Tasks/*.md
 !Tasks/README.md
+!Tasks/Week-2026-W01.md
+!Tasks/workshop-exercises.md
 Notes/*.md
 Context/Memory/*.md
 Context/Document Hub/*.md

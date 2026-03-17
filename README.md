@@ -1,16 +1,39 @@
 # personal-agent
 
-Become agent-native by running your personal agent locally using Obsidian+Claude or Cursor. No code, no database — just a folder of markdown files and an AI that understands your context, goals, and priorities.
+Cowork gives Claude hands. This workspace gives it a brain that remembers.
 
-Your agent reads your files, learns your preferences, remembers what you've learned, and helps you stay focused on what actually matters. It gets smarter every week.
+Run your own personal agent locally — no code, no database, just a folder of markdown files and an AI that understands your context, goals, and priorities. Your agent reads your files, learns your preferences, remembers what you've learned, and helps you stay focused on what actually matters. It gets smarter every week.
+
+This repo works with **Claude Code** or **Claude Co-Work** (just select this folder). Think of Claude Code as Claude Chat with hands — full flexibility, fully customizable. Claude Co-Work is Claude Code in a business suit — it handles about 80% of the same tasks, but you don't have the same flexibility to change and extend it. Either works here.
+
+This is not the underlying AI building blocks (APIs, prompts, tool-use). Those are worth sitting with by yourself the first time so you understand how it all comes together. This is the layer above — the structured context and memory that makes Cowork, Claude Code, or any agentic tool actually personal.
 
 ## What It Does
 
 - **Goal-driven task management** — every task ties back to your stated goals
-- **Daily planning** — type `/today` and get a focused plan based on your priorities
-- **Backlog triage** — brain-dump into `BACKLOG.md`, then run `/process-backlog` to turn raw notes into structured tasks
-- **Weekly review** — `/weekly-wrap` reviews progress, surfaces blockers, and compounds learnings into memory so your agent gets smarter over time
+- **Weekly + daily planning** — `/plan-week` on Monday sets the full week, `/today` each morning builds from it
+- **Backlog triage** — brain-dump into `BACKLOG.md`, then run `/backlog` to turn raw notes into structured tasks
+- **Weekly review** — `/weekly-wrap` reviews progress, produces a shareable update, and compounds learnings into memory
+- **1:1 prep** — `/121 [person]` pulls context from notes, tasks, and tools to generate talking points
+- **Content drafting** — `/draft [topic]` writes in your voice, not generic AI
+- **Task unblocking** — `/unblock [task]` diagnoses stalled tasks and suggests the smallest next action
+- **Bias checking** — `/bias` audits decisions against your motivational blind spots
+- **Structured metadata** — task files use YAML frontmatter so the agent can quickly assess priority and status
 - **Persistent memory** — your agent remembers preferences, decisions, and lessons across sessions
+
+## How This Complements Cowork
+
+Cowork can orchestrate multi-step work, use connectors, deploy sub-agents, and run skills. But each session starts from zero — there's no persistent memory, no goal alignment, and no compounding loop. This workspace is the structured context layer that turns each new session into a continuation of the last one.
+
+| Cowork alone | Cowork + this workspace |
+|---|---|
+| Each session starts blank | Sessions inherit your goals, memory, and learnings |
+| Skills are generic recipes | Skills reference YOUR goals and context |
+| No memory across sessions | `Context/Memory/` persists everything |
+| Task-based, one-and-done | Compounding loop gets smarter every week |
+| You repeat yourself every time | `GOALS.md` is read automatically |
+
+You don't need to choose between Cowork and this workspace — they're complementary. Cowork provides the hands (connectors, sub-agents, Chrome, local files). This workspace provides the brain (goals, memory, learnings, skills that know you).
 
 ## Quick Start
 
@@ -26,19 +49,26 @@ Or download the zip from the green **Code** button above.
 
 You need two things: something to **edit and browse** your files, and something to **run the AI agent**. You can use one tool for both, or pair them.
 
-#### Claude Code Desktop (recommended to start)
+#### Claude Co-Work (easiest to start)
 
-The simplest path. Claude reads your files and responds to slash commands out of the box.
+Claude Code in a business suit — handles most tasks, less customizable, but zero setup.
+
+1. Open [Claude Co-Work](https://claude.ai) and select this folder
+2. Start chatting — try: *"Look at the files in this workspace. What do you see?"*
+
+Skills (`/today`, `/weekly-wrap`, etc.) are auto-discovered from `.claude/skills/`.
+
+#### Claude Code Desktop (recommended for full flexibility)
+
+Full Claude Code experience in an app. More customizable than Co-Work.
 
 1. Download [Claude Code Desktop](https://claude.ai/download) (macOS / Windows)
 2. Open the app → **File > Open Folder** → select this `personal-agent` folder
 3. Start chatting — try: *"Look at the files in this workspace. What do you see?"*
 
-Skills (`/today`, `/weekly-wrap`, etc.) are auto-discovered from `.claude/skills/`.
-
 #### Claude Code CLI
 
-Same capabilities, terminal-based.
+Same capabilities as Desktop, terminal-based.
 
 1. Install: `npm install -g @anthropic-ai/claude-code`
 2. `cd personal-agent && claude`
@@ -70,17 +100,27 @@ Or let the agent interview you:
 
 > *"Help me fill in my GOALS.md. Ask me the questions you need."*
 
-### 4. Start using it
+### 4. Explore the example week
+
+Check out `Tasks/Week-2026-W02.md` — it's a pre-filled example showing how the planning loop works. Monday and Tuesday are "lived" (items checked off, meeting notes, decisions), while Wednesday–Friday are still just planned. Run `/today` to see how the agent reads from this scratchpad and builds a daily briefing.
+
+### 5. Start using it
 
 **Daily:**
-- `/today` — get your daily plan
+- `/today` — get your daily plan (reads from the weekly plan if it exists)
 - Drop tasks into `BACKLOG.md` throughout the day
-- `/process-backlog` — triage your backlog into structured task files
+- `/backlog` — triage your backlog into structured task files
 - *"Remember that I prefer..."* — save preferences to memory
 
 **Weekly:**
-- `/weekly-wrap` — review the week and compound learnings into memory
-- `/goal-alignment` — check if your tasks actually support your goals
+- `/plan-week` — plan the full week on Monday morning
+- `/weekly-wrap` — review the week, produce a shareable update, compound learnings
+
+**As needed:**
+- `/121 [person]` — prep for a 1:1 meeting
+- `/draft [topic]` — draft an email, Slack message, or document
+- `/unblock [task]` — diagnose a stalled task
+- `/bias` — audit decisions against your motivational blind spots
 
 ## Folder Structure
 
@@ -90,8 +130,10 @@ personal-agent/
 ├── BACKLOG.md             # Raw capture inbox — dump ideas here
 ├── AGENTS.md              # Agent instructions (how the AI behaves)
 ├── CLAUDE.md              # Points to AGENTS.md (auto-loaded by Claude)
+├── Weekly Kanban.md       # Sprint board — visual kanban with [[wiki-links]]
 │
 ├── Tasks/                 # Structured task files with metadata
+│   ├── Backlog/           # Initiative/track files — strategic context
 │   └── Done/              # Completed tasks (archived here)
 │
 ├── Context/               # Persistent personal context
@@ -105,24 +147,35 @@ personal-agent/
 │
 └── .claude/skills/        # Slash commands (auto-discovered)
     ├── today/             # /today — daily planning
-    ├── process-backlog/   # /process-backlog — triage inbox
+    ├── plan-week/         # /plan-week — weekly planning
+    ├── backlog/           # /backlog — triage inbox
     ├── weekly-wrap/       # /weekly-wrap — weekly review + learnings
-    └── goal-alignment/    # /goal-alignment — task-goal audit
+    ├── 121/               # /121 — 1:1 meeting prep
+    ├── draft/             # /draft — content drafting
+    ├── unblock/           # /unblock — task diagnosis
+    ├── bias/              # /bias — motivational bias audit
+    └── onboard/           # /onboard — first-time setup
 ```
 
 ## How It Works
 
-Three layers:
+Cowork already gives you connectors (Slack, JIRA, Google, Canva), sub-agents, Chrome access, and local file operations. This workspace adds three layers on top:
 
-1. **Context** (`GOALS.md`, `Context/Memory/`) — the agent reads these to understand who you are and what you're working toward. The richer your context, the better the output.
+1. **Context** (`GOALS.md`, `Context/Memory/`) — the agent reads these to understand who you are and what you're working toward. Without this, every Cowork session is a capable stranger. With it, every session picks up where the last one left off.
 
-2. **Tasks** (`Tasks/`, `BACKLOG.md`) — structured markdown with YAML frontmatter. Each task has a priority, status, and goal reference.
+2. **Tasks** (`Tasks/`, `BACKLOG.md`, `Weekly Kanban.md`) — structured markdown with YAML frontmatter. Each task has a priority, status, description, and goal reference. The Kanban board gives you a visual sprint view. This is the state that persists between sessions.
 
-3. **Skills** (`.claude/skills/`) — reusable workflows triggered by slash commands. They combine file reading, reasoning, and writing into repeatable routines.
+3. **Skills** (`.claude/skills/`) — reusable workflows triggered by slash commands. Unlike generic Cowork skills, these read your context files, reference your goals, and adapt to your priorities. `/today` doesn't give you a generic plan — it gives you YOUR plan.
+
+### The Planning Loop
+
+```
+Monday: /plan-week → creates Tasks/Week-YYYY-WNN.md with all 5 days
+Daily:  /today → reads from weekly plan, reconciles with reality, updates the scratchpad
+Friday: /weekly-wrap → reviews the week, produces shareable update, compounds learnings
+```
 
 ### The Compounding Loop
-
-The system gets smarter over time:
 
 ```
 /weekly-wrap distills insights → Context/Memory/learnings.md
@@ -131,6 +184,7 @@ The system gets smarter over time:
 ```
 
 Your agent after 4 weeks is meaningfully better than on day one.
+
 
 ## Create Your Own Skills
 
@@ -151,7 +205,7 @@ description: "What this skill does"
 
 Run it with `/my-skill`.
 
-**Ideas:** `/prep-meeting [person]` · `/status-update` · `/brainstorm [topic]` · `/draft-comms [topic]`
+**Ideas:** `/status-update` · `/brainstorm [topic]` · `/retro` · `/goal-alignment`
 
 ## License
 
