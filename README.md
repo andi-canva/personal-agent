@@ -22,7 +22,7 @@ Works with **Claude Code Desktop**, **Claude Code CLI**, **Claude Co-Work**, **C
 git clone https://github.com/canvanauts/personal-agent.git
 ```
 
-Or download the zip from the green **Code** button above.
+Or download the zip from the green **<Code>** button above.
 
 Put it somewhere that makes sense for you (not just Downloads). It's a normal folder you open in your AI tool when you use it.
 
