@@ -45,6 +45,8 @@ git clone https://github.com/andi-canva/personal-agent.git
 
 Or download the zip from the green **Code** button above.
 
+Put it somewhere that makes sense for you (not just Downloads). It doesn't need to be stored inside Claude. It's a normal folder you open in your AI tool when you use it.
+
 ### 2. Open it in an AI tool
 
 You need two things: something to **edit and browse** your files, and something to **run the AI agent**. You can use one tool for both, or pair them.
@@ -63,7 +65,7 @@ Skills (`/today`, `/weekly-wrap`, etc.) are auto-discovered from `.claude/skills
 Full Claude Code experience in an app. More customizable than Co-Work.
 
 1. Download [Claude Code Desktop](https://claude.ai/download) (macOS / Windows)
-2. Open the app → **File > Open Folder** → select this `personal-agent` folder
+2. Open the app, click the **Code** tab at the top, select **Local**, then click **Select folder** and choose the `personal-agent` folder
 3. Start chatting — try: *"Look at the files in this workspace. What do you see?"*
 
 #### Claude Code CLI
@@ -94,15 +96,15 @@ Obsidian is great for **browsing and editing** your markdown files — kanban bo
 
 ### 3. Fill in your goals
 
-Open `GOALS.md` and fill in the prompts — your role, vision, quarterly objectives, top 3 priorities. This is the most important file. Everything the agent suggests is grounded in your goals.
+This is the most important file. Everything the agent suggests is grounded in your goals. You can get started in three ways (and these are the same three ways you'll use and update skills ongoing):
 
-Or let the agent interview you:
-
-> *"Help me fill in my GOALS.md. Ask me the questions you need."*
+- **Edit directly** — open `GOALS.md` and fill in the prompts (your role, vision, quarterly objectives, top 3 priorities)
+- **Ask in natural language** — e.g. *"Help me fill in my GOALS.md. Ask me the questions you need."*
+- **Use the `/onboard` command** — a handy skill included in this repo that walks you through a structured interview
 
 ### 4. Explore the example week
 
-Check out `Tasks/Week-2026-W02.md` — it's a pre-filled example showing how the planning loop works. Monday and Tuesday are "lived" (items checked off, meeting notes, decisions), while Wednesday–Friday are still just planned. Run `/today` to see how the agent reads from this scratchpad and builds a daily briefing.
+Check out `Tasks/Week-2026-W01.md` — it's a pre-filled example showing how the planning loop works. Monday and Tuesday are "lived" (items checked off, meeting notes, decisions), while Wednesday–Friday are still just planned. Run `/today` to see how the agent reads from this scratchpad and builds a daily briefing.
 
 ### 5. Start using it
 
