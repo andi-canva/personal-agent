@@ -123,6 +123,7 @@ personal-agent/
 │
 ├── Context/               # Persistent personal context
 │   ├── Memory/            # Facts, preferences, and compounded learnings
+│   │   └── Reference/     # Writing-style guides, frameworks, company context
 │   ├── 121s/              # Ongoing 1:1 relationship docs (maintained by /121)
 │   ├── Document Hub/      # Strategy docs, PRDs, reference material
 │   ├── Meeting Notes/     # Meeting summaries

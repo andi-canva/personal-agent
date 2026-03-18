@@ -19,7 +19,7 @@ If the topic is ambiguous, ask:
 ### Step 1: Check Voice & Preferences
 
 1. Check `Context/Memory/` for voice notes, writing style preferences, or tone guidance
-2. Look for `Context/Knowledge/voice-guide.md` or `Context/Knowledge/voice-samples/` — if they exist, read and apply
+2. Look for `Context/Memory/Reference/writing-styles/` — if voice guides exist there, read and apply
 3. If no voice reference exists, default to: direct, conversational, confident, specific over vague
 
 ### Step 2: Gather Context
@@ -66,8 +66,8 @@ Show the draft and ask:
 If no voice guide or samples exist and the user wants to establish their voice:
 
 1. Ask for 5-10 writing samples (emails, posts, docs they liked)
-2. Save samples to `Context/Knowledge/voice-samples/`
-3. Analyze patterns and create `Context/Knowledge/voice-guide.md` with: sentence style, openers, signature phrases, "never say" list, tone by context (internal/external/public)
+2. Save samples to `Context/Memory/Reference/writing-styles/voice-samples/`
+3. Analyze patterns and create `Context/Memory/Reference/writing-styles/voice-guide.md` with: sentence style, openers, signature phrases, "never say" list, tone by context (internal/external/public)
 
 This only needs to happen once — future `/draft` runs will read the guide automatically.
 

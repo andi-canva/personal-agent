@@ -11,6 +11,10 @@ project/
 │   └── Done/               # Completed/archived tasks
 ├── Context/                # Persistent personal context
 │   ├── Memory/             # Facts, preferences, decisions, and learnings to remember across sessions
+│   │   └── Reference/      # Writing-style guides, frameworks, company context
+│   │       ├── writing-styles/  # Voice guides for different content types
+│   │       └── frameworks/      # Strategic frameworks (JTBD, 7 Powers, Growth Loops)
+│   ├── 121s/               # Ongoing 1:1 relationship docs (maintained by /121)
 │   ├── Document Hub/       # PRDs, strategy docs, org docs
 │   ├── Meeting Notes/      # Meeting notes and summaries
 │   └── Progress Updates/   # Weekly wraps and goal alignment check-ins
@@ -33,6 +37,10 @@ project/
 | `Context/Memory/` | Persistent facts, preferences, decisions, and distilled learnings | Always check at session start; update when you learn something new about the user |
 | `Context/Memory/bias.md` | Marlee motivational profile — drives communication style and bias-calling logic | Read at session start if it exists; apply communication rules and watch for bias patterns |
 | `Context/Memory/learnings.md` | Compounded weekly insights — patterns, lessons, and principles | Reference when giving advice; updated automatically by `/weekly-wrap` |
+| `Context/Memory/Reference/` | Writing-style guides, strategic frameworks, company context | Before running `/draft`, `/review`, or any writing/strategy skill |
+| `Context/Memory/Reference/writing-styles/` | Voice guides for different content types (email, slack, strategy) | When drafting content — `/draft` reads these automatically |
+| `Context/Memory/Reference/frameworks/` | Strategic frameworks (JTBD, 7 Powers, Growth Loops) | When reviewing strategy docs or making strategic decisions |
+| `Context/121s/` | Ongoing 1:1 relationship docs with open loops and session logs | When running `/121` or `/today` (1:1 meeting prep) |
 | `Context/Document Hub/` | PRDs, strategy docs, org docs | When tasks reference work projects or strategic decisions |
 | `Context/Meeting Notes/` | Meeting notes and summaries | When you need recent discussion context |
 | `Context/Progress Updates/` | Historical weekly wraps and goal alignment reviews | When running `/weekly-wrap` — check here for prior wraps to compare |
@@ -62,7 +70,7 @@ When a task is marked done (`status: d`) and moved to `Tasks/Done/`:
 
 1. **Check for promotable outputs** — did this task produce something with lasting value?
    - A **PRD, strategy doc, or decision record** → copy to `Context/Document Hub/`
-   - A **framework, playbook, or reusable template** → copy to `Context/`
+   - A **framework, playbook, or reusable template** → copy to `Context/Memory/Reference/`
    - A **learning or principle** → distill into `Context/Memory/learnings.md`
 2. **If nothing to promote**, just move to `Tasks/Done/` — no action needed.
 3. **When promoting**: copy the relevant content (not the whole task file) into the appropriate Context/ subfolder. The task file stays in `Tasks/Done/` as the execution record.
@@ -193,6 +201,7 @@ Custom commands live in `.claude/skills/<name>/SKILL.md`. These are invoked via 
 | `/unblock [task]` | `.claude/skills/unblock/SKILL.md` | Diagnose a stalled task and suggest the smallest next action |
 | `/bias [topic]` | `.claude/skills/bias/SKILL.md` | On-demand bias audit against your Marlee motivational profile |
 | `/slack-unactioned` | `.claude/skills/slack-unactioned/SKILL.md` | Triage unread Slack — classify as Tonight (urgent) or Tomorrow (can wait) |
+| `/steelman-advice [doc]` | `.claude/skills/steelman-advice/SKILL.md` | Multi-perspective steelmanning of any document — blind spots, reframes, improvements |
 
 To add a new skill: create `.claude/skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`) and instructions in the body.
 
@@ -202,13 +211,15 @@ To add a new skill: create `.claude/skills/<name>/SKILL.md` with YAML frontmatte
 - **User profile**: Role, team, company, reporting structure
 - **Preferences**: Communication style, working hours, tool preferences
 - **Recurring decisions**: Standing priorities, delegation patterns, review cadences
-- **Voice & tone**: Writing samples and style notes for content generation
 - **Learnings**: Distilled weekly insights in `learnings.md` — patterns, lessons, and principles that compound over time
 - **Bias profile**: Marlee motivational profile in `bias.md` — blind spots, communication rules, bias patterns to watch for
+- **Reference material**: `Reference/writing-styles/` for voice guides by content type, `Reference/frameworks/` for strategic frameworks
 
-**When to read:** Check `Context/Memory/` at the start of any session that involves planning, writing, or prioritization.
+`Context/121s/` stores ongoing 1:1 relationship docs — open loops and session logs that carry forward across meetings. Created and updated by `/121` and `/today`.
 
-**When to write:** After the user shares a preference, decision, or fact that should persist. Ask before writing if unsure. Learnings are captured automatically by `/weekly-wrap`.
+**When to read:** Check `Context/Memory/` at the start of any session that involves planning, writing, or prioritization. Check `Context/121s/` when prepping meetings.
+
+**When to write:** After the user shares a preference, decision, or fact that should persist. Ask before writing if unsure. Learnings are captured automatically by `/weekly-wrap`. 1:1 docs are maintained by `/121`.
 
 ## Communication Style
 
