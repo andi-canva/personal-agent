@@ -1,4 +1,4 @@
-# personal-agent
+# Your Personal Agent Harness
 
 Become agent-native by building your own personal agent harness. No code, no database — just a folder of markdown files and an AI that understands your context, goals, and priorities. Your agent reads your files, learns your preferences, remembers what you've learned, and helps you stay focused on what actually matters. It gets smarter every week.
 
