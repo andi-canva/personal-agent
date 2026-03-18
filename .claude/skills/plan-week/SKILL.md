@@ -15,18 +15,20 @@ Run all steps in sequence. Be decisive — make best-guess recommendations rathe
 
 ### Step 1: Load Context
 
-1. Read `GOALS.md` — quarterly objectives, top 3 priorities, priority framework
-2. If `Context/Memory/bias.md` exists, read it — apply communication rules and load bias patterns for Step 3
-3. Read `Context/Memory/learnings.md` — scan recent entries for patterns that should inform this week's plan (e.g., recurring blockers, drift from goals, process improvements)
-4. Scan `Tasks/` root for all active tasks (`status: s` or `status: n`) — note priorities and any due dates
-4b. Scan `Tasks/Backlog/` and read files relevant to this week's priorities — for strategic context on active initiatives alongside `GOALS.md`
-5. Read last week's wrap if available (`Context/Progress Updates/`) — what carried forward, what's still unresolved
-6. Check `Context/Memory/` for preferences that affect planning
-6. **Google Calendar** (via Google Calendar MCP, if available):
+Start from concrete state and signals, then layer in goals and learnings at the end.
+
+1. Scan `Tasks/` root for all active tasks (`status: s` or `status: n`) — note priorities and any due dates
+2. Scan `Tasks/Backlog/` and read files relevant to this week's priorities — for strategic context on active initiatives
+3. Read last week's wrap if available (`Context/Progress Updates/`) — what carried forward, what's still unresolved
+4. **Google Calendar** (via Google Calendar MCP, if available):
    - Pull all events for this week (Monday–Friday): titles, attendees, times, descriptions
    - This feeds the meeting triage step — every meeting should appear in the triage table
    - If Google Calendar MCP is not available, ask: *"Paste your calendar for this week so I can triage meetings."*
-7. If connected tools are available (Slack, email), check for weekend/Friday context: decisions, escalations, urgent threads
+5. If connected tools are available (Slack, email), check for weekend/Friday context: decisions, escalations, urgent threads
+6. Read `Context/Memory/learnings.md` — scan recent entries for patterns that should inform this week's plan (e.g., recurring blockers, drift, process improvements)
+7. Check `Context/Memory/` for preferences that affect planning
+8. Read `GOALS.md` — quarterly objectives, top 3 priorities. Use as an alignment filter on the concrete context already gathered, not the starting frame
+9. If `Context/Memory/bias.md` exists, read it — apply communication rules and load bias patterns for Step 3
 
 ---
 

@@ -45,11 +45,6 @@ Compile a **"Since Yesterday"** digest from all sources: new decisions, open act
 - If a task is referenced in the "Since Yesterday" digest, read the full task file for detail
 - Skim `BACKLOG.md` — flag if new items appeared since last processing
 
-#### 1c. Goals (last)
-
-- Read `GOALS.md` — load current quarterly objectives and top 3 priorities
-- This step comes last so goals serve as an alignment filter on the concrete context already gathered, not as the starting frame
-
 ---
 
 ### Step 2: Reconcile with the Weekly Plan
@@ -77,11 +72,11 @@ Check whether `Tasks/Week-YYYY-WNN.md` exists for the current ISO week.
 
 Construct the plan from: **evidence from Step 1** (what's actually happening) + **weekly plan priorities** (what was planned). New signals override stale plan items.
 
-**Surface exactly 3 focus items** (deep work + quick wins combined). Pick by: urgency from external signals first, then priority field, then goal alignment. Do not list extras.
+**Surface exactly 3 focus items** (deep work + quick wins combined). Pick by: urgency from external signals first, then priority field. Do not list extras.
 
 **Deep work** (focused blocks):
 - The most important items needing concentrated time
-- Tie each to a goal or weekly priority
+- Tie each to a weekly priority where relevant
 
 **Quick wins** (low-energy windows):
 - Small tasks that round out the 3 total
@@ -126,8 +121,6 @@ This is the output the user sees.
 ### Heads Up
 - [Risks, due dates, blockers]
 
-### Goal Alignment
-[One line per active goal from GOALS.md — does today's plan advance it? Flag gaps.]
 ```
 
 End with: *"Does this plan feel right, or should we adjust?"*
