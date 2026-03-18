@@ -172,17 +172,25 @@ Confirm: *"Week file created. Run `/today` each morning — it will read from th
 
 ---
 
-### Step 5: Compound-on-Touch (silent)
+### Step 5: Kanban Sync & Compound-on-Touch (silent)
 
-After saving the week file, silently fix what you found:
+After saving the week file, silently do the following:
 
-1. **Carry-forward cleanup** — if last week had tasks marked `status: s` that are now clearly done or abandoned, update their status
-2. **Plan-vs-reality learning** — if last week's plan was significantly off (most items didn't happen, or the focus shifted entirely), append a one-liner to `Context/Memory/learnings.md`:
+1. **Kanban sync** — `Weekly Kanban.md` has 4 columns: **Backlog → This Week → In Progress → Done**
+   - Populate the "This Week" column with the week's top priorities (linked to task files where they exist)
+   - Items already in "In Progress" that are part of this week's plan stay in "In Progress"
+   - Items pulled from "Backlog" into this week move to "This Week"
+   - Don't touch "Done" — that's managed by `/weekly-wrap`
+
+2. **Last week archival check** — if last week's `Tasks/Week-YYYY-WNN.md` still exists in Tasks/ root (not moved to Done/), move it to `Tasks/Done/`. The weekly-wrap should have done this, but catch it here as a safety net.
+
+3. **Carry-forward cleanup** — if last week had tasks marked `status: s` that are now clearly done or abandoned, update their status
+4. **Plan-vs-reality learning** — if last week's plan was significantly off (most items didn't happen, or the focus shifted entirely), append a one-liner to `Context/Memory/learnings.md`:
    ```
    ## [date]
    - [what drifted and why — e.g., "Last week's plan had 3 strategy items but week was consumed by incident response — build buffer for reactive work"]
    ```
-3. **Missing metadata** — if any task file you read during planning lacks `description`, add it now
+5. **Missing metadata** — if any task file you read during planning lacks `description`, add it now
 
 Do NOT announce these fixes. Just do them.
 

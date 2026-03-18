@@ -137,17 +137,28 @@ Each wrap should make the next one better:
 
 ---
 
-### Step 6: System Health & Kanban Sync
+### Step 6: System Health, Week Archival & Kanban Sync
 
 1. Run a quick check:
    - Count active task files (Tasks/ root, not Done/) missing `description` field
    - Report in the wrap: "System health: X files need enrichment."
 
-2. Kanban sync:
-   - Move completed tasks (`status: d`) from "In Progress" to "Done" in `Weekly Kanban.md`
-   - Mark done items with `[x]` in the Kanban
+2. **Archive the week file:**
+   - Move `Tasks/Week-YYYY-WNN.md` to `Tasks/Done/Week-YYYY-WNN.md`
+   - This keeps the Tasks/ root clean — only active week files live there
 
-3. **Promotion check** — for each completed task, check if it produced promotable outputs:
+3. **Carry-forward tasks:**
+   - Check the week file's "Deferred" / "Carry-forward" sections for uncompleted items
+   - These get picked up by `/plan-week` when the next week is planned
+   - If any task has rolled 3+ weeks without progress, flag it explicitly in the wrap output
+
+4. **Kanban sync** — `Weekly Kanban.md` has 4 columns: **Backlog → This Week → In Progress → Done**
+   - Move completed tasks (`status: d`) to "Done" column, mark with `[x]`
+   - Move items that were "This Week" but didn't complete back to "Backlog" or "In Progress" as appropriate
+   - Clear the "This Week" column (it gets repopulated by `/plan-week`)
+   - Add the closed week file to "Done": `- [x] [[Week-YYYY-WNN]] — CW[XX] closed ([summary])`
+
+5. **Promotion check** — for each completed task, check if it produced promotable outputs:
    - Strategy docs, decision records → flag for `Context/Document Hub/`
    - Frameworks, playbooks → flag for `Context/`
    - Report: "Promotable outputs: [list with suggested destinations]" — let the user confirm before promoting

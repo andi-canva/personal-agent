@@ -51,12 +51,31 @@ project/
 | `Context/Meeting Notes/` | Meeting notes and summaries | When you need recent discussion context |
 | `Context/Progress Updates/` | Historical weekly wraps and goal alignment reviews | When running `/weekly-wrap` — check here for prior wraps to compare |
 | `Notes/` | Daily notes and thinking | Check for recent context when planning the day |
-| `Weekly Kanban.md` | Sprint board — lightweight Obsidian kanban with `[[wiki-links]]` to task files | Visual sprint view; synced by `/backlog` and `/weekly-wrap` |
+| `Weekly Kanban.md` | Sprint board — 4-column Obsidian kanban: **Backlog → This Week → In Progress → Done**. Uses `[[wiki-links]]` to task files | Visual sprint view; synced by `/plan-week` (populates This Week), `/weekly-wrap` (archives week, moves to Done), and `/backlog` (adds to Backlog) |
 | `.claude/skills/` | Slash command definitions | Automatically loaded by Claude Code |
 
 ## Backlog Flow
 
-The task pipeline: `BACKLOG.md` (raw capture) → `Tasks/` (detailed files) → `Weekly Kanban.md` (sprint board with links).
+The task pipeline: `BACKLOG.md` (raw capture) → `Tasks/` (detailed files) → `Weekly Kanban.md` (4-column sprint board).
+
+### Kanban Columns
+
+| Column | What lives here | Who manages it |
+|--------|----------------|----------------|
+| **Backlog** | Tasks not yet scheduled for any week | `/backlog` adds here; items pulled to "This Week" by `/plan-week` |
+| **This Week** | Tasks pulled into the current week plan | `/plan-week` populates; `/weekly-wrap` clears at week end |
+| **In Progress** | Tasks actively being worked on (`status: s`) | `/today` or manual; items stay until done or re-parked |
+| **Done** | Completed tasks + closed week files | `/weekly-wrap` moves here; marks `[x]` |
+
+### Week File Lifecycle
+
+`Tasks/Week-YYYY-WNN.md` lives in Tasks/ root during the active week. When `/weekly-wrap` runs, it:
+1. Closes the week file (marks outcomes, maps to wrap)
+2. Moves the file to `Tasks/Done/Week-YYYY-WNN.md`
+3. Carries forward incomplete items to the wrap's "CW[XX+1] Focus" section
+4. Syncs the Kanban: clears "This Week", moves completed items to "Done"
+
+`/plan-week` then reads the prior wrap's carry-forwards and populates the new week + "This Week" column.
 
 When the user says "clear my backlog", "process backlog", or similar:
 1. Read `BACKLOG.md` and extract every actionable item.

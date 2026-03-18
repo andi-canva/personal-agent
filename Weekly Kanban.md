@@ -8,6 +8,10 @@ kanban-plugin: board
 
 
 
+## This Week
+
+
+
 ## In Progress
 
 
@@ -15,3 +19,9 @@ kanban-plugin: board
 ## Done
 
 
+
+%% kanban:settings
+```
+{"kanban-plugin":"board","list-collapse":[false]}
+```
+%%
