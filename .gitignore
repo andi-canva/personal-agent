@@ -19,6 +19,7 @@ Context/121s/*.md
 !Context/121s/TEMPLATE.md
 Context/Knowledge/**/*.md
 !Context/Knowledge/**/TEMPLATE.md
+!Context/Knowledge/Lenny/**/*.md
 Bookmarks/*.md
 GOALS.md
 BACKLOG.md
