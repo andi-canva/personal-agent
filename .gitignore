@@ -5,9 +5,17 @@ Tasks/*.md
 !Tasks/workshop-exercises.md
 Notes/*.md
 Context/Memory/*.md
+!Context/Memory/TEMPLATE.md
+!Context/Memory/bias.md
+!Context/Memory/profile.md
+!Context/Memory/learnings.md
 Context/Document Hub/*.md
+!Context/Document Hub/TEMPLATE.md
 Context/Meeting Notes/*.md
 Context/Progress Updates/*.md
+!Context/Progress Updates/TEMPLATE.md
+Context/121s/*.md
+!Context/121s/TEMPLATE.md
 Bookmarks/*.md
 GOALS.md
 BACKLOG.md
