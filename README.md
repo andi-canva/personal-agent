@@ -10,8 +10,10 @@ Works with **Claude Code Desktop**, **Claude Code CLI**, **Claude Co-Work**, **C
 - **Weekly + daily planning** — `/plan-week` on Monday sets the full week, `/today` each morning builds from it
 - **Backlog triage** — brain-dump into `BACKLOG.md`, then run `/backlog` to turn raw notes into structured tasks
 - **Weekly review** — `/weekly-wrap` reviews progress, produces a shareable update, and compounds learnings into memory
-- **1:1 prep** — `/121 [person]` pulls context from notes, tasks, and tools to generate talking points
+- **1:1 prep** — `/121 [person]` pulls context from notes, tasks, and tools to generate talking points, and maintains ongoing relationship docs at `Context/121s/`
+- **Meeting prep built into /today** — 1:1s get full talking points (Discuss, Ask, Strategic, Close the loop); normal meetings get a 1-bullet action/perspective
 - **Content drafting** — `/draft [topic]` writes in your voice, not generic AI
+- **Document steelmanning** — `/steelman-advice [doc]` runs 3-5 parallel critique perspectives to surface blind spots and concrete improvements
 - **Persistent memory** — your agent remembers preferences, decisions, and lessons across sessions
 
 ## Quick Start
@@ -98,8 +100,10 @@ Check out `Tasks/Week-2026-W01.md` — it's a pre-filled example showing how the
 - `/weekly-wrap` — review the week, produce a shareable update, compound learnings
 
 **As needed:**
-- `/121 [person]` — prep for a 1:1 meeting
+- `/121 [person]` — prep for a 1:1 meeting (also runs automatically inside `/today`)
 - `/draft [topic]` — draft an email, Slack message, or document
+- `/steelman-advice [doc]` — multi-perspective critique of any document
+- `/slack-unactioned` — triage unread Slack into Tonight vs Tomorrow
 - `/unblock [task]` — diagnose a stalled task
 - `/bias` — audit decisions against your motivational blind spots
 
@@ -119,6 +123,7 @@ personal-agent/
 │
 ├── Context/               # Persistent personal context
 │   ├── Memory/            # Facts, preferences, and compounded learnings
+│   ├── 121s/              # Ongoing 1:1 relationship docs (maintained by /121)
 │   ├── Document Hub/      # Strategy docs, PRDs, reference material
 │   ├── Meeting Notes/     # Meeting summaries
 │   └── Progress Updates/  # Weekly wraps and reviews
@@ -135,6 +140,8 @@ personal-agent/
     ├── draft/             # /draft — content drafting
     ├── unblock/           # /unblock — task diagnosis
     ├── bias/              # /bias — motivational bias audit
+    ├── steelman-advice/   # /steelman-advice — multi-perspective document critique
+    ├── slack-unactioned/  # /slack-unactioned — triage unread messages
     └── onboard/           # /onboard — first-time setup
 ```
 
@@ -152,7 +159,7 @@ Three layers:
 
 ```
 Monday: /plan-week → creates Tasks/Week-YYYY-WNN.md with all 5 days
-Daily:  /today → reads from weekly plan, reconciles with reality, updates the scratchpad
+Daily:  /today → reads from weekly plan, preps every meeting (1:1s + normal), updates the scratchpad
 Friday: /weekly-wrap → reviews the week, produces shareable update, compounds learnings
 ```
 
