@@ -127,6 +127,10 @@ personal-agent/
 │   ├── Memory/            # Facts, preferences, and compounded learnings
 │   │   └── Reference/     # Writing-style guides, frameworks, company context
 │   ├── 121s/              # Ongoing 1:1 relationship docs (maintained by /121)
+│   ├── Knowledge/         # Accumulated knowledge and reference material
+│   │   ├── Product/       # Product concepts, patterns, methodologies
+│   │   ├── Frameworks/    # Strategic and analytical frameworks
+│   │   └── Lenny/         # Insights from Lenny's Newsletter/Podcast
 │   ├── Document Hub/      # Strategy docs, PRDs, reference material
 │   ├── Meeting Notes/     # Meeting summaries
 │   └── Progress Updates/  # Weekly wraps and reviews

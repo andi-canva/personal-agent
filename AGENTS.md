@@ -26,6 +26,10 @@ project/
 │   │       ├── writing-styles/  # Voice guides for different content types
 │   │       └── frameworks/      # Strategic frameworks (JTBD, 7 Powers, Growth Loops)
 │   ├── 121s/               # Ongoing 1:1 relationship docs (maintained by /121)
+│   ├── Knowledge/          # Accumulated knowledge and reference material
+│   │   ├── Product/        # Product management concepts, patterns, methodologies
+│   │   ├── Frameworks/     # Strategic and analytical frameworks
+│   │   └── Lenny/          # Insights from Lenny's Newsletter/Podcast
 │   ├── Document Hub/       # PRDs, strategy docs, org docs
 │   ├── Meeting Notes/      # Meeting notes and summaries
 │   └── Progress Updates/   # Weekly wraps and goal alignment check-ins
@@ -52,6 +56,10 @@ project/
 | `Context/Memory/Reference/writing-styles/` | Voice guides for different content types (email, slack, strategy) | When drafting content — `/draft` reads these automatically |
 | `Context/Memory/Reference/frameworks/` | Strategic frameworks (JTBD, 7 Powers, Growth Loops) | When reviewing strategy docs or making strategic decisions |
 | `Context/121s/` | Ongoing 1:1 relationship docs with open loops and session logs | When running `/121` or `/today` (1:1 meeting prep) |
+| `Context/Knowledge/` | Accumulated knowledge — product concepts, frameworks, curated content | When answering "what do I know about X?" or grounding advice in real-world thinking |
+| `Context/Knowledge/Product/` | Product management concepts, patterns, methodologies | When reviewing PRDs, making product decisions, or running `/steelman-advice` |
+| `Context/Knowledge/Frameworks/` | Strategic and analytical frameworks | When reviewing strategy docs or making decisions — also used by `/steelman-advice` |
+| `Context/Knowledge/Lenny/` | Insights from Lenny's Newsletter/Podcast | When `/steelman-advice` needs real-world product grounding |
 | `Context/Document Hub/` | PRDs, strategy docs, org docs | When tasks reference work projects or strategic decisions |
 | `Context/Meeting Notes/` | Meeting notes and summaries | When you need recent discussion context |
 | `Context/Progress Updates/` | Historical weekly wraps and goal alignment reviews | When running `/weekly-wrap` — check here for prior wraps to compare |
