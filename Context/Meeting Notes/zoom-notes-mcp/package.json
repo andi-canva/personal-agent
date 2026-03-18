@@ -1,0 +1,21 @@
+{
+  "name": "zoom-notes-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for fetching Zoom My Notes transcripts",
+  "type": "module",
+  "bin": {
+    "zoom-notes-mcp": "./server.mjs"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "build": "pkg ."
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "playwright": "^1.58.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.105.4",
+    "webpack-cli": "^6.0.1"
+  }
+}
