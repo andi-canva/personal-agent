@@ -11,7 +11,7 @@ Every session starts with this boot sequence. Do not skip it. Do not respond to 
 
 **Why this matters:** Skills live in `.claude/skills/<name>/SKILL.md` and are NOT in the system skill registry. If you skip step 1, you won't know they exist. Use `ls` or `find`, not Glob (Glob skips hidden directories like `.claude/`).
 
-When the user types `/skill-name`, read `.claude/skills/<skill-name>/SKILL.md` and follow its instructions exactly.
+When the user types `/skill-name` (or `run /skill-name`, or just the skill name like `today`), read `.claude/skills/<skill-name>/SKILL.md` and follow its instructions exactly. Match loosely — `today`, `/today`, `run today`, and `run /today` all mean the same thing.
 
 ## Workspace Shape
 

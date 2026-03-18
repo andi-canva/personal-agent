@@ -47,7 +47,9 @@ Skills (`/today`, `/weekly-wrap`, etc.) are auto-discovered from `.claude/skills
 Claude Code in a business suit — handles most tasks, less customizable, but zero setup.
 
 1. Open [Claude Co-Work](https://claude.ai) and select this folder
-2. Start chatting — skills are auto-discovered
+2. Start chatting — skills are discovered at session start via the boot sequence in AGENTS.md
+
+> **Tip:** Co-Work's built-in `/` menu doesn't know about local skills. If typing `/today` shows "unknown skill", type `run /today` or just `today` instead — the agent recognizes all forms.
 
 #### Claude Code CLI
 
