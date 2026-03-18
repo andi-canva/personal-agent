@@ -146,6 +146,14 @@ created_date: [YYYY-MM-DD]
 - Suggest no more than three focus tasks unless the user insists.
 - Flag blocked tasks and propose next steps or follow-up questions.
 
+## How to Approach Tasks
+- **Break it down first.** Outline non-trivial tasks (3+ steps) before starting. Re-plan immediately if things go sideways.
+- **One task, one outcome.** Keep tasks focused — if it has two distinct outcomes, it's two tasks.
+- **Verify before marking done.** Check the output against the original goal. Don't mark done just because steps were completed.
+- **Anticipate follow-ups.** If a task will obviously trigger a next step, flag it or create the follow-on task immediately.
+- **Root causes, not band-aids.** Fix the underlying issue, not the symptom. If the same problem keeps recurring, change the process.
+- **Use sub-agents for complex work.** Kick off parallel research or drafting agents for independent pieces rather than doing everything sequentially.
+
 ## Categories (adjust as needed)
 
 - **technical**: build, fix, configure
