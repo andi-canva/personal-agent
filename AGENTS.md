@@ -241,6 +241,7 @@ Custom commands live in `.claude/skills/<name>/SKILL.md`. These are invoked via 
 | `/bias [topic]` | `.claude/skills/bias/SKILL.md` | On-demand bias audit against your Marlee motivational profile |
 | `/slack-unactioned` | `.claude/skills/slack-unactioned/SKILL.md` | Triage unread Slack — classify as Tonight (urgent) or Tomorrow (can wait) |
 | `/steelman-advice [doc]` | `.claude/skills/steelman-advice/SKILL.md` | Multi-perspective steelmanning of any document — blind spots, reframes, improvements |
+| `/link-audit` | `.claude/skills/link-audit/SKILL.md` | Audit cross-references across the two-hub model (AGENTS.md → Context/, Kanban → Tasks/) and fix orphaned files |
 
 To add a new skill: create `.claude/skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`) and instructions in the body.
 
@@ -293,6 +294,7 @@ Examples:
 - `/draft [topic]` — draft content in your voice
 - `/unblock [task]` — diagnose and unblock a stalled task
 - `/bias` — run a bias audit on your current plan
+- `/link-audit` — check that all files are properly connected and discoverable
 - "Remember that I prefer..." — saves to Context/Memory
 - "What have I learned about..." — searches Context/Memory/learnings.md
 
