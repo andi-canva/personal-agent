@@ -1,0 +1,11 @@
+{
+  "lenny_root": "auto",
+  "context_paths": {
+    "goals": "GOALS.md",
+    "company": null
+  },
+  "defaults": {
+    "mode": "standard",
+    "challenge": "blind-spot-hunt"
+  }
+}
