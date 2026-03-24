@@ -79,15 +79,39 @@ async function ensureSession() {
   // Always navigate to the notes URL to ensure we're on the right page
   let page = context.pages()[0] || (await context.newPage());
   await page.goto(NOTES_URL, { waitUntil: "domcontentloaded" });
-  await page.waitForTimeout(2000);
 
-  // Check for auth redirect
-  const url = page.url();
-  if (url.includes("/signin") || url.includes("/login") || !url.includes("zoom.us/notes")) {
-    // Don't close the browser - user needs it to log in
+  // Wait for either the notes page to load or the Okta password screen to appear.
+  // If SSO is in progress (e.g. Okta redirect with valid session), give it time to
+  // complete rather than failing immediately on any redirect.
+  const AUTH_TIMEOUT_MS = 30_000;
+  const POLL_MS = 500;
+  const deadline = Date.now() + AUTH_TIMEOUT_MS;
+  let landed = false;
+
+  while (Date.now() < deadline) {
+    const currentUrl = page.url();
+
+    // Success - we made it back to Zoom notes
+    if (currentUrl.includes("zoom.us/notes")) {
+      landed = true;
+      break;
+    }
+
+    // Okta password entry screen - user needs to type credentials, bail out
+    try {
+      const hasPasswordField = await page.locator('input[type="password"]').count();
+      if (hasPasswordField > 0) break;
+    } catch (_) {
+      // page may be navigating, ignore
+    }
+
+    await page.waitForTimeout(POLL_MS);
+  }
+
+  if (!landed) {
     browser.close(); // disconnect CDP, browser stays open
     throw new Error(
-      "Authentication expired - the browser was redirected to a login page. " +
+      "Authentication expired - the browser is showing a login page. " +
       "Please complete SSO login in the browser window, then try again."
     );
   }
@@ -522,15 +546,16 @@ server.tool(
         };
       }
 
-      const listing = items
-        .map((item, i) => {
-          const f = item.file;
-          const date = f.createdInfo?.time || "";
-          return `[${i}] ${f.title}  (${date})`;
-        })
-        .join("\n");
+      const notes = items.map((item, i) => {
+        const f = item.file;
+        return {
+          index: i,
+          name: f.title,
+          modified: f.createdInfo?.time || "",
+        };
+      });
 
-      return { content: [{ type: "text", text: listing }] };
+      return { content: [{ type: "text", text: JSON.stringify(notes, null, 2) }] };
     } catch (err) {
       return {
         content: [{ type: "text", text: `Error: ${err.message}` }],
