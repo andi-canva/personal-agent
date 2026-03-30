@@ -1,11 +1,11 @@
 ---
 name: bias
-description: "On-demand bias audit — check a decision, plan, or situation against your motivational profile blind spots (supports Marlee, DISC, CliftonStrengths, Enneagram, or any scored assessment)"
+description: "On-demand bias audit — check a decision, plan, or situation against your Marlee motivational profile blind spots"
 ---
 
 # Bias Check
 
-Run a targeted bias audit against your motivational profile from any assessment tool. Works standalone (full audit of current context) or with a specific topic.
+Run a targeted bias audit against your Marlee motivational profile (getmarlee.com). Works standalone (full audit of current context) or with a specific topic.
 
 ## Instructions
 
@@ -19,22 +19,20 @@ Read `Context/Memory/bias.md`. If the file is missing or empty, run the **Setup 
 
 Tell the user:
 
-> **No motivational profile found.** I need your dimension scores to run bias checks. These come from any motivational or personality assessment tool — the most commonly used one with this system is [Marlee](https://getmarlee.com), but DISC, CliftonStrengths, Enneagram, or any scored framework works.
+> **No Marlee profile found.** I need your motivational dimensions to run bias checks.
 >
-> **If you use Marlee:**
 > 1. Go to [getmarlee.com](https://getmarlee.com) and sign in
-> 2. Navigate to **People → Me** → click **All Motivations** to see the full bubble grid
-> 3. Make sure all dimension categories are selected — click each filter pill or select-all
-> 4. Screenshot the complete grid (you may need 2) and paste here
->
-> **If you use another tool:**
-> Export or screenshot your dimension scores and paste them here — include the dimension name and score/level for each.
+> 2. Navigate to **People → Me** (your profile)
+> 3. Click **All Motivations** to see the bubble grid
+> 4. Make sure all dimension categories are selected (Action Level, Action Direction, Authority, Task Direction, Scope, Communication, Environment, Responsibility, Change, Work Approach, Time) — click each filter pill or select-all
+> 5. Scroll to see all bubbles, then take screenshots of the complete grid (you may need 2 screenshots to capture everything)
+> 6. Paste the screenshot(s) here
 >
 > I'll extract your scores and set up your profile automatically.
 
-When the user provides their results:
+When the user provides screenshot(s):
 
-1. Extract every dimension name and score (accepting any format — screenshot, text export, copy-paste)
+1. Extract every dimension name and score from the bubble grid
 2. Create `Context/Memory/bias.md` using the **Profile Template** below
 3. Derive communication rules (Section B) from the high/low patterns
 4. Derive bias patterns (Section C) from the dimensional gaps
@@ -42,7 +40,7 @@ When the user provides their results:
 
 #### Profile Template
 
-Use the template structure — three sections:
+Use the template structure from the existing `Context/Memory/bias.md` — three sections:
 - **Section A**: All dimensions sorted by score (highest first), grouped into tiers
 - **Section B**: Communication rules derived from extreme scores (90+ high, sub-60 low)
 - **Section C**: Bias patterns derived from high-low gaps that create blind spots

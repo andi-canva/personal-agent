@@ -15,26 +15,26 @@ Run all steps in sequence. Be decisive — make best-guess recommendations rathe
 
 ### Step 1: Load Context
 
-Start from concrete state and signals, then layer in goals and learnings at the end.
-
 1. Scan `Tasks/` root for all active tasks (`status: s` or `status: n`) — note priorities and any due dates
 2. Scan `Tasks/Backlog/` and read files relevant to this week's priorities — for strategic context on active initiatives
-3. Read last week's wrap if available (`Context/Progress Updates/`) — what carried forward, what's still unresolved
-4. **Google Calendar** (via Google Calendar MCP, if available):
+3. Read last week's wrap if available (`Context/Progress Updates/Q[N]-YYYY Weekly Wraps/CW[XX-1].md`) — what carried forward, what's still unresolved
+4. **Slack** — check for anything from the weekend or Friday that sets context for this week: decisions, escalations, urgent threads from key stakeholders in the , John, Jay, Sophie, Dean, Otavio, or key channels (Help Assistant, AIHX, CanvaAI, mobile, CN team)
+5. **Google Calendar** (via Google Calendar MCP, if available):
    - Pull all events for this week (Monday–Friday): titles, attendees, times, descriptions
    - This feeds the meeting triage step — every meeting should appear in the triage table
    - If Google Calendar MCP is not available, ask: *"Paste your calendar for this week so I can triage meetings."*
-5. If connected tools are available (Slack, email), check for weekend/Friday context: decisions, escalations, urgent threads
-6. Read `Context/Memory/learnings.md` — scan recent entries for patterns that should inform this week's plan (e.g., recurring blockers, drift, process improvements)
-7. Check `Context/Memory/` for preferences that affect planning
-8. Read `GOALS.md` — quarterly objectives, top 3 priorities. Use as an alignment filter on the concrete context already gathered, not the starting frame
-9. If `Context/Memory/bias.md` exists, read it — apply communication rules and load bias patterns for Step 3
 
 ---
 
 ### Step 2: Internal Analysis (not shown to user)
 
-Before writing anything, privately determine:
+Now load the strategic lens and synthesize:
+
+1. Read `GOALS.md` — quarterly objectives, top 3 priorities, priority framework
+2. Read `Context/Memory/bias.md` — apply communication rules; load bias patterns for Step 3
+3. Read `Context/Memory/learnings.md` — scan recent entries for patterns that should inform this week's plan (e.g., recurring blockers, drift from goals, process improvements)
+
+With goals, bias, and learnings loaded against the raw context from Step 1, privately determine:
 
 - What are the 3 highest-leverage things that could move this week? (tied to quarterly objectives)
 - Which meetings are essential vs drainable? What can be dropped, shortened, or delegated?
@@ -133,6 +133,9 @@ _Filled in by /today_
 ### Follow-ups
 _Filled in by /today_
 
+### Meeting Prep
+_Filled in by /today — 1:1s get full talking points; normal meetings get 1 action/perspective bullet._
+
 ### Meetings today
 _[Meeting name] with [names] @ [time] — [outcome]_
 
@@ -148,7 +151,31 @@ _Free-form._
 ---
 
 ## Tuesday, [DD Mon]
-[same structure]
+
+### Planned
+- [ ] [item from weekly plan]
+- [ ] [item from weekly plan]
+
+### Deep Work
+_Filled in by /today_
+
+### Quick Wins
+_Filled in by /today_
+
+### Follow-ups
+_Filled in by /today_
+
+### Meetings today
+_..._
+
+### Decisions & context
+_..._
+
+### Blockers
+_..._
+
+### Notes
+_..._
 
 ---
 
@@ -168,7 +195,7 @@ _Free-form._
 ---
 ```
 
-Confirm: *"Week file created. Run `/today` each morning — it will read from this file and update your day's section."*
+Confirm: *"Week file created → `Tasks/Week-YYYY-WNN.md`. Run `/today` each morning — it will read from this file and update your day's section."*
 
 ---
 
@@ -188,9 +215,10 @@ After saving the week file, silently do the following:
 4. **Plan-vs-reality learning** — if last week's plan was significantly off (most items didn't happen, or the focus shifted entirely), append a one-liner to `Context/Memory/learnings.md`:
    ```
    ## [date]
-   - [what drifted and why — e.g., "Last week's plan had 3 strategy items but week was consumed by incident response — build buffer for reactive work"]
+   - [what drifted and why — e.g., "CW10 plan had 3 strategy items but week was consumed by incident response — build buffer for reactive work"]
    ```
-5. **Missing metadata** — if any task file you read during planning lacks `description`, add it now
+5. **Missing metadata** — if any task file you read during planning lacks `description` or `topics`, add them now
+6. **Index freshness** — if `Context/Memory/active-tasks.md` is >7 days old, regenerate it
 
 Do NOT announce these fixes. Just do them.
 
@@ -198,4 +226,4 @@ Do NOT announce these fixes. Just do them.
 
 ## Output Format
 
-The plan output fits on one screen. Tables over paragraphs. Decisive recommendations — no "you could consider" hedging.
+The plan output fits on one screen. Tables over paragraphs. Decisive recommendations — no "you could consider" hedging. Flag the bias check only if something obvious stands out (e.g. week plan has no time for the top priority).

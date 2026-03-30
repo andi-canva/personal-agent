@@ -20,7 +20,7 @@ If no person name is provided, ask: "Who's the 1:1 with?"
 3. Search `Context/Document Hub/` for shared docs, PRDs, or projects involving them
 4. Check `GOALS.md` — identify which goals this person is connected to (e.g., key relationships, team members, stakeholders)
 5. Check `Context/Memory/` for any stored preferences or notes about working with this person
-6. If connected tools are available (Slack, email), search for recent conversations with them
+6. If MCP tools are available, use the `slack_user_id`, `slack_dm_channel`, and `slack_canvas_id` from the frontmatter to directly fetch recent DMs and read/update the shared canvas — skip searching if these fields are populated. If any field is empty, search Slack to find it and backfill the frontmatter for next time.
 
 ### Step 2: Review Your Recent Work
 
@@ -40,7 +40,7 @@ Output four sections using the format below. Each section should have 3-5 short 
 
 **Sections:**
 
-1. **Discuss** — Topics to raise: open loops, updates to share, things to demo or walk through. Lead with context ("Project X scaling: ...") not naked questions.
+1. **Discuss** — Topics to raise: open loops, updates to share, things to demo or walk through. Lead with context ("Personal-OS workshop scaling: ...") not naked questions.
 2. **Ask** — Direct questions where you need their input, perspective, or a decision. Frame each as a question or a position + question.
 3. **Strategic** — Bigger-picture alignment topics: shared goals, org design, opportunities to explore together. Career/development if this is a direct report.
 4. **Close the loop** — Unresolved action items from previous meetings or Slack threads that need a status check or handoff.
@@ -58,6 +58,9 @@ description: "[Role/team] — ongoing 1:1 relationship doc with talking points, 
 type: knowledge
 topics: ["leadership"]
 created_date: YYYY-MM-DD
+slack_user_id: "" # Their Slack user ID (e.g. U027T704S5N) — look up via slack_search_users
+slack_dm_channel: "" # DM channel ID (e.g. D06RMTHAYU9) — found in Slack search results for DMs
+slack_canvas_id: "" # Shared 121 canvas file ID (e.g. F06UNLHE7S6) — search for "121 [name]" canvases
 ---
 ```
 

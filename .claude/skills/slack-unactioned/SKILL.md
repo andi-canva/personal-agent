@@ -9,9 +9,9 @@ Steps:
 - **Get the current date** — run `date +%Y-%m-%d` to determine today's date. Do NOT rely on the currentDate context block
 - Determine the time period at hand (e.g. today's date if run standalone, or the day being summarised if run as part of a daily summary)
 - Fetch messages from the relevant time period:
-  1. Use available Slack MCP tools to find notification-triggering messages (e.g. fetch notifications, unread counts, or DMs)
+  1. Use `list_notifications` to find notification-triggering messages
   2. Check `Context/Memory/` for any stored priority channels or contacts — read those channels too
-  3. Use available Slack MCP tools to read messages in each relevant channel for the time period
+  3. Use `slack_read_channel` on each relevant channel for the time period
 - For each message or thread:
   1. Read the full thread
   2. Check whether the user has already replied or reacted in that thread — if so, it is actioned and can be skipped

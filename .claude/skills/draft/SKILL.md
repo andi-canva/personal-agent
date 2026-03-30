@@ -18,9 +18,13 @@ If the topic is ambiguous, ask:
 
 ### Step 1: Check Voice & Preferences
 
-1. Check `Context/Memory/` for voice notes, writing style preferences, or tone guidance
-2. Look for `Context/Memory/Reference/writing-styles/` — if voice guides exist there, read and apply
-3. If no voice reference exists, default to: direct, conversational, confident, specific over vague
+1. Check `Context/Reference/writing-styles/` for a format-specific guide — **always read the matching file before drafting**:
+   - Slack message → `Context/Reference/writing-styles/slack.md`
+   - Strategy doc / memo → `Context/Reference/writing-styles/strategy.md`
+   - Other formats → scan the folder for a match
+2. Check `Context/Memory/` for any additional voice notes or tone overrides
+3. Look for `Context/Knowledge/voice-guide.md` or `Context/Knowledge/voice-samples/` — if they exist, read and apply
+4. If no voice reference exists anywhere, default to: direct, conversational, confident, specific over vague
 
 ### Step 2: Gather Context
 
@@ -29,11 +33,11 @@ Based on the content type, pull relevant context:
 | Content Type | Where to Look |
 |---|---|
 | Email / Slack message | `Context/Meeting Notes/` for relationship context, `Tasks/` for project status |
-| Strategy doc / memo | `GOALS.md`, `Context/Document Hub/` |
+| Strategy doc / memo | `GOALS.md`, `Context/Document Hub/`, `Context/Knowledge/` |
 | Update / status | `Context/Progress Updates/`, active `Tasks/`, recent completions in `Tasks/Done/` |
 | Post / article | `GOALS.md` for positioning, `Context/Memory/` for voice |
 
-If connected tools are available (Slack, Confluence), check for recent threads related to the topic.
+If MCP tools are available, check Slack or Confluence for recent threads related to the topic.
 
 ### Step 3: Draft
 
@@ -66,8 +70,8 @@ Show the draft and ask:
 If no voice guide or samples exist and the user wants to establish their voice:
 
 1. Ask for 5-10 writing samples (emails, posts, docs they liked)
-2. Save samples to `Context/Memory/Reference/writing-styles/voice-samples/`
-3. Analyze patterns and create `Context/Memory/Reference/writing-styles/voice-guide.md` with: sentence style, openers, signature phrases, "never say" list, tone by context (internal/external/public)
+2. Save samples to `Context/Knowledge/voice-samples/`
+3. Analyze patterns and create `Context/Knowledge/voice-guide.md` with: sentence style, openers, signature phrases, "never say" list, tone by context (internal/external/public)
 
 This only needs to happen once — future `/draft` runs will read the guide automatically.
 

@@ -27,11 +27,15 @@ Take any existing skill, define what "good output" looks like as binary yes/no c
 
 ## before starting: gather context
 
-**STOP. Do not run any experiments until all fields below are confirmed with the user. Ask for any missing fields before proceeding.**
+**STOP. Do not read the skill, do not define evals, do not run any experiments until all fields below are explicitly confirmed by the user in this conversation. This gate holds regardless of how much context the user has already provided — even if they describe failure modes, past mistakes, or reference prior conversations.**
+
+**Why this matters:** Inferring evals from context is how you get evals that sound right but test the wrong thing. The user may have additional failure modes in mind, different test inputs, or a different pass threshold. Always confirm before proceeding.
+
+**Ask the user for all of the following in a single message. Do not proceed until they respond:**
 
 1. **Target skill** — Which skill do you want to optimize? (need the exact path to SKILL.md)
 2. **Test inputs** — What 3-5 different prompts/scenarios should we test the skill with? (variety matters — pick inputs that cover different use cases so we don't overfit to one scenario)
-3. **Eval criteria** — What 3-6 binary yes/no checks define a good output? (these are your "test questions" — see [references/eval-guide.md](references/eval-guide.md) for how to write good evals)
+3. **Eval criteria** — What 3-6 binary yes/no checks define a good output? (these are your "test questions" — see [references/eval-guide.md](references/eval-guide.md) for how to write good evals). If the user says "based on our conversations" or similar, propose your best-guess evals and ask them to confirm or correct before proceeding.
 4. **Reference corpus** — Optional but powerful for voice/style skills. Does the user have 3-5 real examples of good output they actually used? If yes, collect them into a `references/golden-examples/` folder. These become eval anchors — the agent compares generated output against them during scoring. (see "reference corpus eval" below)
 5. **Banned patterns** — Optional. A list of words, phrases, or regex patterns that should never appear in the output. Build this from known anti-patterns. These are the highest-signal, lowest-effort evals. (see [references/eval-guide.md](references/eval-guide.md) "Banned-pattern evals" section)
 6. **Runs per experiment** — How many times should we run the skill per mutation? Default: 5. (more runs = more reliable scores, but slower and more expensive. 5 is the sweet spot for most skills.)

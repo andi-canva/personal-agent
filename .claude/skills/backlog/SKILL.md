@@ -18,9 +18,10 @@ When the user invokes `/backlog` (or says "clear my backlog", "process backlog",
 
 ### Step 2: Enrich with Context
 
-1. For each item, search `Context/` for relevant context — matching keywords, project names, or dates
-2. Check `Context/Memory/` for user preferences that affect prioritization (e.g., standing priorities, delegation patterns)
-3. Reference `GOALS.md` to identify which goal each item supports
+1. For each item, **start with the relevant domain index** (`Context/Memory/*.md`) to understand existing knowledge on the topic
+2. Search `Context/` and `Context/Knowledge/` for additional context — matching keywords, project names, or dates
+3. Check `Context/Memory/` for user preferences that affect prioritization (e.g., standing priorities, delegation patterns)
+4. Reference `GOALS.md` to identify which goal each item supports
 
 ### Step 3: Clarify Ambiguous Items
 
@@ -36,12 +37,7 @@ When the user invokes `/backlog` (or says "clear my backlog", "process backlog",
 
 ### Step 5: Create Task Files
 
-Decide where each item belongs:
-
-- **(a) New initiative/track**: if the item is a multi-step initiative that needs strategic context, decisions, and frameworks — create a context file in `Tasks/Backlog/` with background and decisions, then create initial actionable slices in `Tasks/` root
-- **(b) Standalone task**: if it's a single actionable item — create directly in `Tasks/` root
-
-Create each task using this template:
+1. Create a new markdown file in `Tasks/` for each triaged item using this template:
 
 ```yaml
 ---
@@ -49,7 +45,7 @@ title: [Actionable task name]
 description: "[~150 chars — retrieval filter for what makes this task distinctive]"
 type: task
 category: [technical|outreach|research|writing|content|admin|personal|other]
-topics: ["topic-1", "topic-2"]  # relevant tags for this task
+topics: ["multi-agent", "canva-ai"]  # from Topic Vocabulary in AGENTS.md
 priority: [P0|P1|P2|P3]
 status: n
 created_date: [YYYY-MM-DD]
@@ -71,9 +67,8 @@ resource_refs:
 - YYYY-MM-DD: Created from backlog.
 ```
 
-Each task **must**:
-- Reference a goal in its Context section. If no goal fits, flag it and ask whether to create a new goal entry or clarify why the work matters.
-- Have a `description` and `topics` field — follow the Discovery-First Principle.
+2. Each task **must** reference a goal in its Context section. If no goal fits, flag it and ask whether to create a new goal entry or clarify why the work matters.
+3. Each task **must** have a `description` and `topics` field — follow the Discovery-First Principle.
 
 ### Step 6: Summarize and Clear
 
@@ -103,7 +98,8 @@ After processing and clearing the backlog:
    ## [date]
    - [pattern — e.g., "Third time 'update stakeholders on X' appeared in backlog — consider a recurring weekly task"]
    ```
-2. **Missing metadata** — enrich any task files you touched that lack `description`
+2. **Domain index gaps** — if a new task covers a topic not represented in any domain index (`Context/Memory/*.md`), note it. If 3+ tasks now exist for a topic without a domain index, suggest creating one.
+3. **Index refresh** — regenerate `Context/Memory/active-tasks.md` since new tasks were just created
 
 Do NOT announce these fixes. Just do them.
 

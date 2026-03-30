@@ -5,7 +5,7 @@ description: "Build a focused plan for today based on goals, tasks, and recent a
 
 # Today
 
-Build a focused daily plan by starting from what actually happened — messages, calendar, meeting outcomes — then reconciling with the weekly plan, and anchoring to goals at the end. The output is a daily briefing the user can confirm or adjust.
+Build a focused daily plan by starting from what actually happened — Slack threads, Confluence changes, meeting outcomes — then reconciling with the weekly plan, and anchoring to goals at the end. The output is a daily briefing the user can confirm or adjust.
 
 ## Instructions
 
@@ -15,22 +15,28 @@ Run all steps in sequence. Be concise and actionable.
 
 ### Step 1: Gather Context (granular first)
 
-Start from the most granular, real-time signals and work upward.
+Start from the most granular, real-time signals and work upward. Run MCP calls in parallel where possible.
 
 #### 1a. External signals — what changed overnight
 
 Pull signals from yesterday. Use the current date to compute "yesterday" for all queries.
+
+**Slack** (via Slack MCP, if available):
+- Search for messages from yesterday in priority channels: Help Assistant, AIHX, CanvaAI, mobile, CN team
+- Search for DMs or mentions from priority contacts: Rob, John, Jay, Sophie, Dean, Otavio, Danne, Christine
+- Extract: decisions made, questions awaiting response, FYIs that shift priorities
+- If Slack MCP is not available, note: *"Slack MCP not connected — paste any important Slack highlights so I can factor them in."*
+
+**Confluence** (via `user-mcp-atlassian`):
+- `confluence_search` with CQL: `lastModified >= startOfDay("-1d") AND contributor = currentUser()` — pages the user touched yesterday
+- `confluence_search` with CQL: `lastModified >= startOfDay("-1d")` scoped to key spaces (Help Assistant, AIHX, CanvaAI) — pages others changed that may affect priorities
+- For any page with recent activity, call `confluence_get_comments` to surface new comments or feedback awaiting response
 
 **Google Calendar** (via Google Calendar MCP, if available):
 - Pull today's events: titles, attendees, times, descriptions
 - Pull yesterday's events to cross-reference against action items
 - Extract: meetings that need prep, time blocks available for deep work, back-to-back stretches to flag
 - If Google Calendar MCP is not available, ask: *"Paste today's calendar so I can factor in meetings."*
-
-**Connected tools** (Slack, email — if available via MCP):
-- Search for messages from yesterday in priority channels or DMs
-- Extract: decisions made, questions awaiting response, FYIs that shift priorities
-- If not available, note: *"No messaging tools connected — paste any important highlights so I can factor them in."*
 
 **Zoom** (via Zoom MCP, if available):
 - Check for recordings or transcripts from yesterday's meetings
@@ -41,7 +47,7 @@ Compile a **"Since Yesterday"** digest from all sources: new decisions, open act
 
 #### 1b. Task state
 
-- Scan `Tasks/` for active tasks (`status: s` or `status: n`) — note priorities and due dates
+- Read `Context/Memory/active-tasks.md` for all active tasks with priorities and descriptions
 - If a task is referenced in the "Since Yesterday" digest, read the full task file for detail
 - Skim `BACKLOG.md` — flag if new items appeared since last processing
 
@@ -49,18 +55,24 @@ Compile a **"Since Yesterday"** digest from all sources: new decisions, open act
 
 ### Step 2: Reconcile with the Weekly Plan
 
+**FIRST: compute the current ISO week using Bash.** Run `date +%G-W%V` — this returns the exact ISO year-week string (e.g. `2026-W14`). Do NOT calculate the week number mentally. ISO week boundaries cause off-by-one errors, especially at the start of a week.
+
+Use the Bash result to form the filename: `Tasks/Week-[ISO-year-week].md` (e.g. `Tasks/Week-2026-W14.md`).
+
+**THEN: check whether it exists.** Use Glob to look for `Tasks/Week-[year]-W*.md`. If no file matches the computed week exactly, check if a file for a ±1 week is present — if so, flag it and confirm with the user before creating anything new. Never create a new week file when one already exists for the correct ISO week.
+
 Check whether `Tasks/Week-YYYY-WNN.md` exists for the current ISO week.
 
 **If the weekly plan exists:**
 
 1. Read the full file — load top priorities, risks, success criteria, and all daily sections
 2. Find **yesterday's section** — reconcile with the "Since Yesterday" digest:
-   - Mark items as `[x]` where evidence confirms completion
+   - Mark items as `[x]` where Slack/Confluence/Zoom evidence confirms completion
    - Add `(likely done — confirm?)` annotation to items that appear progressed but need user confirmation
    - Leave genuinely incomplete items as `[ ]`
 3. Find **today's section** — extract the `### Planned` items as the starting base
 4. Identify **new items** that emerged from external signals but aren't in today's plan yet
-5. Roll forward incomplete items from yesterday with a `->` prefix
+5. Roll forward incomplete items from yesterday with a `↩` prefix
 
 **If no weekly plan exists:**
 - Note at the top of output: *"No week plan found for W[XX] — run `/plan-week` on Monday to pre-plan the full week."*
@@ -111,7 +123,7 @@ Construct the plan from: **evidence from Step 1** (what's actually happening) + 
 - Small tasks that round out the 3 total
 
 **Follow-ups**:
-- Threads needing a response
+- Threads from Slack/Confluence needing a response
 - Action items from yesterday's meetings
 - Comments or reviews awaiting input
 
@@ -123,10 +135,10 @@ Construct the plan from: **evidence from Step 1** (what's actually happening) + 
 
 ### Step 5: Write the Daily Briefing
 
-This is the output the user sees.
+This is the output the user sees. Before writing, load the communication style:
 
-1. Check `Context/Memory/` for preferences that affect planning or communication style
-2. If `Context/Memory/bias.md` exists, apply Section B rules to output
+1. Read `Context/Memory/bias.md` — apply **Section B** rules to all output (lead with data/outcomes, use tables and bullet trees, stay present-focused, skip emotional framing)
+2. Read `Context/Memory/` for any other preferences that affect planning
 
 **Briefing structure:**
 
@@ -134,7 +146,7 @@ This is the output the user sees.
 ## Daily Briefing — [Weekday, DD Mon]
 
 ### Since Yesterday
-[2-4 bullet digest: key decisions, completed items, new signals. Cite sources.]
+[2-4 bullet digest: key decisions, completed items, new signals from Slack/Confluence/meetings. Cite sources.]
 
 ### Today's Calendar
 [List today's meetings with times, attendees, and prep needed. Flag back-to-back stretches and available deep work windows.]
@@ -196,7 +208,7 @@ After the user confirms (or on first pass if no objections), update `Tasks/Week-
 _Prep generated by /today Step 3. 1:1s get full talking points; normal meetings get 1 action/perspective bullet._
 
 ### Meetings today
-_[Meeting name] with [names] @ [time] — [outcome]_
+_[Meeting name] with [names] — [outcome]_
 
 ### Decisions & context
 _Decisions made today: what, by whom, why._
@@ -215,7 +227,7 @@ _Free-form._
 
 The file is a **living document** — never remove or reset checked items.
 
-Confirm: *"Weekly scratchpad updated."*
+Confirm: *"Weekly scratchpad updated → `Tasks/Week-YYYY-WNN.md`"*
 
 ---
 
@@ -223,13 +235,14 @@ Confirm: *"Weekly scratchpad updated."*
 
 After the main output is delivered, silently fix what you found:
 
-1. **Stale tasks** — if any task read during planning has `status: s` but evidence shows it's done (checked off in scratchpad, confirmed in external signals), update its status to `d` and move to `Tasks/Done/`
-2. **Missing metadata** — if any task file you read lacks `description`, add it while you're there
+1. **Stale tasks** — if any task read during planning has `status: s` but evidence shows it's done (checked off in scratchpad, confirmed in Slack/Confluence), update its status to `d` and move to `Tasks/Done/`
+2. **Missing metadata** — if any task file you read lacks `description` or `topics`, add them now
 3. **Recurring patterns** — if you notice the same blocker appearing 3+ days, or a goal consistently getting zero focus, append a one-liner to `Context/Memory/learnings.md`:
    ```
    ## [date]
    - [pattern observed — e.g., "Goal X has had no focus for 5 consecutive /today runs"]
    ```
+4. **Index freshness** — if `Context/Memory/active-tasks.md` is >7 days old, regenerate it after completing the briefing
 
 Do NOT announce these fixes in the briefing. Just do them.
 

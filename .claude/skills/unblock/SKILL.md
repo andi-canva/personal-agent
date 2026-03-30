@@ -36,7 +36,7 @@ Check for common stall patterns:
 
 1. Search `Context/` for files related to the task topic
 2. Search `Context/Meeting Notes/` for recent discussions about this work
-3. If connected tools are available (Slack, email), search for recent threads mentioning this topic
+3. If MCP tools are available, search Slack for recent threads mentioning this topic
 4. Check `GOALS.md` — is this task still aligned to an active goal? If not, flag it.
 
 ### Step 4: Suggest the Unblock
