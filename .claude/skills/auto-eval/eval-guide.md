@@ -4,7 +4,7 @@ How to write eval criteria that actually improve your skills instead of giving y
 
 ---
 
-## the golden rule
+## The Golden Rule
 
 Every eval must be a yes/no question. Not a scale. Not a vibe check. Binary.
 
@@ -12,7 +12,7 @@ Why: Scales compound variability. If you have 4 evals scored 1-7, your total sco
 
 ---
 
-## good evals vs bad evals
+## Good Evals vs Bad Evals
 
 ### Text/copy skills (newsletters, tweets, emails, landing pages)
 
@@ -109,7 +109,7 @@ These are high-signal, low-effort, and agents score them consistently. Build the
 
 ---
 
-## common mistakes
+## Common Mistakes
 
 ### 1. Too many evals
 More than 6 evals and the skill starts gaming them — it optimizes for passing the test instead of producing good output. Like a student who memorizes answers without understanding the material.
@@ -133,7 +133,7 @@ If eval 1 is "Is the text grammatically correct?" and eval 4 is "Are there any s
 
 ---
 
-## writing your evals: the 3-question test
+## Writing Your Evals: The 3-Question Test
 
 Before finalizing an eval, ask:
 
@@ -143,7 +143,7 @@ Before finalizing an eval, ask:
 
 ---
 
-## template
+## Template
 
 Copy this for each eval:
 

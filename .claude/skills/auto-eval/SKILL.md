@@ -11,7 +11,7 @@ This skill adapts Andrej Karpathy's autoresearch methodology (autonomous experim
 
 ---
 
-## the core job
+## The Core Job
 
 Take any existing skill, define what "good output" looks like as binary yes/no checks, then run an autonomous loop that:
 
@@ -25,7 +25,7 @@ Take any existing skill, define what "good output" looks like as binary yes/no c
 
 ---
 
-## before starting: gather context
+## Before Starting: Gather Context
 
 **STOP. Do not read the skill, do not define evals, do not run any experiments until all fields below are explicitly confirmed by the user in this conversation. This gate holds regardless of how much context the user has already provided — even if they describe failure modes, past mistakes, or reference prior conversations.**
 
@@ -44,7 +44,7 @@ Take any existing skill, define what "good output" looks like as binary yes/no c
 
 ---
 
-## step 1: read the skill
+## Step 1: Read the Skill
 
 Before changing anything, read and understand the target skill completely.
 
@@ -57,7 +57,7 @@ Do NOT skip this. You need to understand what the skill does before you can impr
 
 ---
 
-## step 2: build the eval suite
+## Step 2: Build the Eval Suite
 
 Convert the user's eval criteria into a structured test. Every check must be binary — pass or fail, no scales.
 
@@ -115,7 +115,7 @@ Example: 4 evals × 5 runs = max score of 20.
 
 ---
 
-## step 3: establish baseline
+## Step 3: Establish Baseline
 
 Run the skill AS-IS before changing anything. This is experiment #0.
 
@@ -137,7 +137,7 @@ experiment	score	max_score	pass_rate	status	description
 
 ---
 
-## step 4: run the experiment loop
+## Step 4: Run the Experiment Loop
 
 This is the core autoresearch loop. Once started, run autonomously until stopped.
 
@@ -185,7 +185,7 @@ This is the core autoresearch loop. Once started, run autonomously until stopped
 
 ---
 
-## step 5: write the changelog
+## Step 5: Write the Changelog
 
 After each experiment (whether kept or discarded), append to `changelog.md`:
 
@@ -203,7 +203,7 @@ This changelog is the most valuable artifact. It's a research log that any futur
 
 ---
 
-## step 6: deliver results
+## Step 6: Deliver Results
 
 When the user returns or the loop stops, present:
 
@@ -217,7 +217,7 @@ When the user returns or the loop stops, present:
 
 ---
 
-## output format
+## Output Format
 
 The skill produces three files in `autoresearch-[skill-name]/`:
 
@@ -244,7 +244,7 @@ experiment	score	max_score	pass_rate	status	description
 
 ---
 
-## example: optimizing a diagram-generator skill
+## Example: Optimizing a Diagram-Generator Skill
 
 **Context gathered:**
 - Target skill: `~/.claude/skills/diagram-generator/SKILL.md`
@@ -285,7 +285,7 @@ Result: Hit 39/40. One remaining failure: a complex diagram with overlapping lab
 
 ---
 
-## step 7: post-deployment correction tracking (optional but high-value)
+## Step 7: Post-Deployment Correction Tracking (Optional but High-Value)
 
 The eval loop catches problems you can anticipate. But the best eval signal comes from what the user has to fix *after* running the improved skill in production. This step closes that gap.
 
@@ -317,7 +317,7 @@ Store this in `autoresearch-[skill-name]/corrections.md`. It's the bridge betwee
 
 ---
 
-## how this connects to other skills
+## How This Connects to Other Skills
 
 **What feeds into autoresearch:**
 - Any existing skill that needs optimization
@@ -333,7 +333,7 @@ Store this in `autoresearch-[skill-name]/corrections.md`. It's the bridge betwee
 
 ---
 
-## the test
+## The Test
 
 A good autoresearch run:
 
