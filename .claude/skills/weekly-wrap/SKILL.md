@@ -19,7 +19,7 @@ When the user invokes `/weekly-wrap`, run all steps in sequence **without waitin
 
 Pull everything from the target week before synthesising anything.
 
-1. **Weekly scratchpad** — read `Tasks/Week-YYYY-WNN.md` (ISO week number)
+1. **Weekly scratchpad** — read `Tasks/Week-YYYY-WNN.md` (ISO week number, e.g. `Tasks/Week-2026-W11.md`)
    - Count ticked `[x]` vs unticked `[ ]` items across all daily sections
    - Extract all free-form notes, decisions, and meeting entries from Notes sections
    - Note which days had entries
@@ -29,66 +29,143 @@ Pull everything from the target week before synthesising anything.
    - Also scan `Tasks/Backlog/` to assess initiative-level progress beyond individual task completions — flag any track that has had no slice activity this week
    - Also flag `status: s` with no progress log entry in the last 7 days (stalled)
 4. **Goals** — read `GOALS.md` for quarterly objectives and top 3 priorities
-5. **Prior wrap** — read the most recent file in `Context/Progress Updates/` to compare trajectory
-6. **Connected tools** — if Slack, email, or project tools are available via MCP, pull the week's key activity:
-   - Decisions in threads, action items, blockers, escalations, announcements
-   - If tools are unavailable, note this and proceed — don't block the wrap
+5. **Prior wrap** — read the most recent file in `Context/Progress Updates/Q[N]-YYYY Weekly Wraps/` to compare trajectory (determine the correct quarterly folder from today's date: Q1 = Jan–Mar, Q2 = Apr–Jun, Q3 = Jul–Sep, Q4 = Oct–Dec)
+6. **Slack** — if Slack MCP tools are available, pull the week's biggest activity:
+   - Search DMs and key channels for messages involving your name, team, or active initiatives
+   - Look for: decisions in threads, action items, blockers, escalations, announcements
+   - Channels to prioritise: Help Assistant, AIHX, CanvaAI, mobile, CN team, DMs from Rob, John, Jay, Sophie, Dean, Otavio
+   - If Slack MCP tools are unavailable, note this and proceed — don't block the wrap
+7. **Jira / Confluence** — if MCP tools are available, check for status changes on key initiatives. If unavailable, skip.
 
 ---
 
 ### Step 2: Internal Review (not shown to user)
 
-Before writing the status update, do this analysis privately:
+Before writing the status update, do this analysis privately. **All names, bias labels, scratchpad metrics, and detailed breakdowns stay in this step — they NEVER appear in the shareable portion (Step 3).**
 
 - Map completed work to goals — which goals moved, which didn't
 - Identify the 4-6 most significant things that happened (decisions, deliverables, meetings, shifts)
 - List every blocker and stalled item with owner and how long it's been stuck
-- Pull specific names from meeting notes for action items
-- If `Context/Memory/bias.md` exists, check against bias patterns — did any show up this week?
+- Pull specific names from meeting notes for action items (for internal sections only)
+- Check against `Context/Memory/bias.md` Section C — did any bias pattern show up this week? (for learnings only, never in shareable)
+- Note product metrics: ticket volumes, SRR, CSAT, experiment results (these DO belong in shareable)
 
 ---
 
 ### Step 3: Write the Weekly Status Update
 
-**Produce ONLY the short, shareable version directly.** No long draft first. Target ~200 words. Use simple language.
+**Produce ONLY the short, shareable version directly.** No long draft first. Hard limit: 250 words max for the shareable portion. This is sent to your manager — write it like a Slack message to them, not a report filed into a system.
 
 Use this structure:
 
 ```
-# Weekly Update CW[XX] — [DD–DD Mon YYYY]
+# Weekly Wrap CW[XX] — [DD–DD Mon YYYY]
 
-**In short:**
-[2-3 sentences: what happened, what succeeded, what's blocked. Plain English, data where useful.]
+**TL;DR:**
+[2-3 sentences. Start with what happened, not a hype adjective. Keep problems for "On my mind". Positive but honest.]
 
-## What happened
-- [Thing that moved — who was involved, what was decided]
-- [Thing that moved — who was involved, what was decided]
-- [Thing that moved — who was involved, what was decided]
-(4-5 bullets max. Only things that actually moved.)
+## Update this week (selection)
+- [Thing that moved, why it matters. Use accurate verbs (drafted/decided/kicked off, not shipped/approved).]
+- [Combine related items. Include product metrics when available (ticket reduction %, CSAT, experiment results).]
+- [Include one "strong take": an opinionated position on something you care about, not just status.]
+(4-5 bullets max. ~25 words per bullet. Vary sentence structure, don't put an em-dash after every bold phrase.)
 
-## What's next
-- [Next action — who owns it, rough timing]
-- [Next action — who owns it, rough timing]
-- [Next action — who owns it, rough timing]
+## On my mind the coming weeks
+- [Strategic tension or question you're working through — not a to-do item]
+- [Open question for the reader, if relevant — "keen to get your take on X"]
+- [Risk or dependency you're watching]
+(2-4 bullets. Reflective, not tactical. No specific dates or task names. Use "I" voice. Include asks when you need input.)
 ```
 
-**Tone rules:**
-- Simple, direct language — as if explaining to a smart colleague over coffee
-- Data where it adds clarity, not decoration
-- Specific names, not "the team" or "stakeholders"
-- Optimistic framing — what moved, not what failed
+#### Voice rules
+
+**This reads like a message to your manager, not a status report.**
+- Conversational, direct — as if you're catching them up over coffee or in a Slack DM
+- Address the reader when relevant: "per your suggestion last week", "keen to discuss in our 121", "would love your take on this"
+- Show personality — excitement ("really promising"), concern ("worried about"), genuine curiosity ("wondering if")
+- Include **asks** when you need input: "would appreciate your steer on X", "flagging for your awareness"
+- At least one bullet should be a **"strong take"** — an opinionated position, not just facts: "Strong take: evals is the most important AI skill in 2025" or "I think the root cause is X, not Y"
+- Use accurate verbs: "drafted", "kicked off", "exploring" — NEVER "shipped", "approved", "finalized" unless truly done
+- Include real **product metrics** when available: ticket reduction %, SRR, CSAT, experiment hit rates
+- Add context that explains WHY something matters, not just WHAT happened
+
+#### Absolute rules for the shareable portion
+
+1. **NEVER use individual names.** No "shared with Sally", "aligned with Kerry", "Simone session". Use roles, teams, or unnamed references: "shared with design leads", "aligned with the team", "got positive signals from leadership". Names belong ONLY in the internal sections (Status Check, CW Focus).
+2. **NEVER include internal system metrics** — scratchpad completion rates, avoidance pattern counts, bounded time blocks, bias labels. These are your private productivity tools, not reader-facing content.
+3. **NEVER include goal tags** like "— Goal: AIRR" in the shareable portion. Save for internal Status Check.
+4. **NEVER write a changelog.** Don't list completed items. Tell the story of what moved and why it matters.
+
+**Exclude:**
+- Leadership philosophy or culture musings
+- Long-term strategic hypotheticals
+- Generic process improvements without a concrete owner
+- Corporate jargon: "landed", "big calls", "key wins", "driving", "leveraging", "synergies", "key opportunity", "critical milestone", "significant progress", "major breakthrough", "major unlock", "emerged as a concrete integration opportunity"
+- **Salesy/hype openers** in TL;DR: "Strong finish", "Great week", "Productive week", "Big progress". Just start with what happened.
+- **Em-dash overuse**: don't put an em-dash after every bold phrase. Vary sentence structure. Use periods, colons, or just continue the sentence naturally.
+- Implementation details the reader doesn't need: "reframed around X, dropped Y rationale, added Z context"
+
+**Good example (target this voice):**
+
+```
+# Weekly Wrap CW21 — 19–23 May 2025
+
+**TL;DR:**
+Strategy playbacks went well with founders, positive signals on H2 direction. LLM eval goal moving with first vendor sessions done. Free user support showing early wins at 25% rollout.
+
+## Update this week (selection)
+- Strategy reviews done, positive feedback on H2 direction, no big concerns from leadership
+- Had first sessions with two LLM eval vendors. Cost model and integration depth are the key tradeoffs. I regret not doing this earlier, it looks very promising
+- All-hands presented H2 roadmap to 60+ attendees, good energy and alignment
+- Free user support ramped to 25%, seeing 6K fewer tickets/month while CSAT holds stable
+
+## On my mind the coming weeks
+- AI Help integration needs to kick off cleanly while I'm away. Want to make sure handover is tight
+- Ops restructure feels like it's being done to the team rather than with them. I think the root cause is centralised control, not collaboration structure. Keen to discuss
+- LLM eval tool decision coming up. Leaning toward one vendor but want to validate cost model first
+```
+
+**Bad example (what NOT to produce — every line violates a rule):**
+
+```
+# Weekly Wrap CW12 — 16–20 Mar 2026
+
+**TL;DR:**
+Strong finish — all 4 top priorities shipped by Friday. CN AI proposal rewrite
+broke a 3-week avoidance pattern with a bounded 90min block. Scratchpad
+completion jumped from 17% to 52%.
+[❌ Internal metrics. ❌ Avoidance/bias language. ❌ Changelog tone.]
+
+## What happened
+- Mid-cycle review first cut shared with Sally/Danne — synthesises AIRR
+  trajectory, 46K bypass impact, Kerry's leaky bucket findings
+  [❌ Names 3 people. ❌ Implementation detail.]
+- CN AI proposal rewrite completed — reframed around Chinese LLM leverage for
+  Help, dropped mobile UX rationale, added attrition context. 3 weeks of
+  rolling finally broken with a bounded 90min block
+  [❌ Names nobody but explains the recipe. ❌ Internal avoidance tracking.]
+- Side quest operating model aligned — Simone session (Mar 18) set ownership
+  pairs, staged lifecycle, 8-week cycles
+  [❌ Names person. ❌ Date in shareable.]
+
+## On my mind the coming weeks
+- I want to get the CN AI proposal to Mark before the quarter ends
+  [❌ Names the manager. ❌ This is a task, not a tension.]
+```
 
 ---
 
 ### Step 4: Write the Full Wrap (internal detail, appended below the shareable update)
 
-After the shareable update, append these sections for the saved wrap file:
+This section is internal — **names, goal tags, and detailed breakdowns are OK here** (this is where they belong, not in the shareable portion above). After the shareable update, append these sections for the saved wrap file:
 
 ```
 ## Status Check
-| Initiative | Status | Notes |
-|------------|--------|-------|
-| [goal/initiative] | On track / At risk / Blocked / Paused | [short note] |
+Track the **team goals from Jira** (CG-712, CG-709, etc.), not personal objectives. These are the goals your PMs own.
+
+| Team Goal | Owner | Status | Notes |
+|-----------|-------|--------|-------|
+| [Goal name from Jira] | [PM] | ✅ / ⚠️ / 🔴 / ⏸️ | [short note on progress or blocker] |
 
 ## CW[XX+1] Focus
 
@@ -104,10 +181,9 @@ After the shareable update, append these sections for the saved wrap file:
 - [anything at risk]
 
 ## Learnings (saved to Memory)
-- [3-5 bullet learnings — insights, patterns, bias flags]
-
-## System Health
-- [files missing descriptions, index freshness]
+- [Single sentence per learning. No elaboration. Pattern or insight in ~15 words max.]
+- [Example: "Bounded time blocks break avoidance — 90min cap shipped the CN AI rewrite."]
+- [3-5 learnings total]
 ```
 
 Flag if any active quarterly objective has had zero activity two weeks running.
@@ -119,12 +195,11 @@ Flag if any active quarterly objective has had zero activity two weeks running.
 Distill the week into durable knowledge for future sessions.
 
 1. Read `Context/Memory/learnings.md` — avoid repeating what's already captured
-2. Extract 3-5 learnings:
-   - **Insights**: what worked, what didn't, and why (evidence-backed)
-   - **Patterns**: recurring themes across tasks, blockers, or decisions
-   - **Bias flags**: if a bias pattern appeared this week, name it and note context
+2. Extract 3-5 learnings as **single sentences** (~15 words each):
+   - Insight, pattern, or bias flag — no elaboration, no multi-sentence explanations
+   - Format: "[Pattern/insight] — [concrete example or evidence in same sentence]"
    - If something keeps recurring across multiple wraps, promote it to a standing principle
-3. **Save directly** — append a new dated section to `Context/Memory/learnings.md` (3-5 bullets max)
+3. **Save directly** — append a new dated section to `Context/Memory/learnings.md` (3–5 bullets max)
 4. Do NOT ask for confirmation — save and show what was added in the output
 
 ### Compounding Principle
@@ -137,11 +212,11 @@ Each wrap should make the next one better:
 
 ---
 
-### Step 6: System Health, Week Archival & Kanban Sync
+### Step 6: Week Archival & Kanban Sync
 
-1. Run a quick check:
+1. Run a quick internal check (do NOT include in wrap output — this is housekeeping, not reader-facing):
    - Count active task files (Tasks/ root, not Done/) missing `description` field
-   - Report in the wrap: "System health: X files need enrichment."
+   - Check if `Context/Memory/active-tasks.md` is older than 7 days
 
 2. **Archive the week file:**
    - Move `Tasks/Week-YYYY-WNN.md` to `Tasks/Done/Week-YYYY-WNN.md`
@@ -159,26 +234,33 @@ Each wrap should make the next one better:
    - Add the closed week file to "Done": `- [x] [[Week-YYYY-WNN]] — CW[XX] closed ([summary])`
 
 5. **Promotion check** — for each completed task, check if it produced promotable outputs:
-   - Strategy docs, decision records → flag for `Context/Document Hub/`
-   - Frameworks, playbooks → flag for `Context/`
+   - PRDs, strategy docs, decision records → flag for `Context/Document Hub/`
+   - Frameworks, playbooks, templates → flag for `Context/Knowledge/` or `Context/Reference/`
+   - Stakeholder insights → flag for `Context/Reference/stakeholders.md`
    - Report: "Promotable outputs: [list with suggested destinations]" — let the user confirm before promoting
+
+6. If indexes are stale (>7 days), run `/rebuild-indexes`
 
 ---
 
 ### Step 7: Save the Wrap
 
-Save the full wrap (shareable update + internal detail sections) to `Context/Progress Updates/`.
+Determine the correct quarterly folder from today's date:
+- Jan–Mar → `Context/Progress Updates/Q1-YYYY Weekly Wraps/`
+- Apr–Jun → `Context/Progress Updates/Q2-YYYY Weekly Wraps/`
+- Jul–Sep → `Context/Progress Updates/Q3-YYYY Weekly Wraps/`
+- Oct–Dec → `Context/Progress Updates/Q4-YYYY Weekly Wraps/`
 
-Use a consistent naming convention: `CW[XX]-YYYY.md` (e.g. `CW11-2026.md`).
+Save the full wrap (shareable update + internal detail sections) as `CW[XX].md` inside that folder.
 
 If a file for this CW already exists, append the new wrap at the top (most recent first) rather than overwriting.
 
-Confirm: *"Saved to `Context/Progress Updates/CW[XX]-YYYY.md`. Learnings appended to Memory."*
+Confirm: *"Saved to `Context/Progress Updates/Q[N]-YYYY Weekly Wraps/CW[XX].md`. Learnings appended to Memory."*
 
 ---
 
 ## Key Principle: No Mid-Flow Prompts
 
-The entire wrap — shareable update, internal detail, learnings save, system health, and file save — runs as one uninterrupted pass. The user reviews the complete output and provides corrections after, not during. This eliminates back-and-forth rounds.
+The entire wrap — shareable update, internal detail, learnings save, and file save — runs as one uninterrupted pass. The user reviews the complete output and provides corrections after, not during. This eliminates back-and-forth rounds.
 
-If any external tool is unavailable, note it and continue. Never block the wrap waiting for a tool.
+If any external tool (Slack, Jira) is unavailable, note it and continue. Never block the wrap waiting for a tool.
