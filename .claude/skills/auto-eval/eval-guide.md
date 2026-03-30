@@ -64,6 +64,49 @@ Why: Scales compound variability. If you have 4 evals scored 1-7, your total sco
 - "Is the document under [X] pages/words?" (binary, measurable)
 - "Does the executive summary fit in one paragraph of 3 sentences or fewer?" (binary, countable)
 
+### Voice/style matching skills (weekly wraps, emails, Slack messages, anything that should sound like a specific person)
+
+These are the hardest to eval because "sounds right" is subjective. The trick is to decompose voice into observable, greppable signals.
+
+**Bad evals:**
+- "Does it sound like the user?" (too vague, agent will always say yes)
+- "Is the tone appropriate?" (subjective, inconsistent)
+- "Rate how natural it sounds 1-10" (scale = unreliable)
+
+**Good evals:**
+- "Does the output contain zero items from the banned-phrases list: [list]?" (binary, greppable)
+- "Does the output contain zero individual names (first or last) in sections where names are banned?" (binary, greppable)
+- "Does at least one bullet contain an opinionated position, not just a factual status update?" (binary, checkable)
+- "Does the output address the reader directly at least once (e.g. 'keen to discuss', 'would appreciate your take')?" (binary, searchable)
+- "If placed next to 3 reference examples, would a reader struggle to identify the AI-generated one?" (binary, comparative — requires reference corpus, see below)
+- "Does the output avoid starting any section with a hype adjective (e.g. 'Strong', 'Great', 'Productive', 'Big')?" (binary, greppable)
+
+**How to use reference examples as eval anchors:**
+
+For voice matching, the most powerful eval is comparison against known-good outputs. Collect 3-5 real examples the user actually sent (not AI-generated). Store them in the skill's `references/` folder. During scoring, present the agent with both the generated output and a reference example, then ask: "Could these have been written by the same person?" This catches voice drift that no checklist will find.
+
+### Banned-pattern evals (works for any skill type)
+
+The easiest evals to write and the most reliable to score. Define a list of strings, phrases, or regex patterns that should never appear in the output. The agent (or a simple grep) checks for their presence.
+
+**When to use:** whenever you discover recurring anti-patterns during manual review. Each time you correct an AI output, ask: "what specific word or pattern triggered this correction?" That pattern becomes a banned-pattern eval.
+
+**Format:**
+```
+EVAL [N]: No banned patterns
+Question: Does the output contain zero matches from the banned list?
+Banned list:
+- "strong finish" (salesy opener)
+- "major unlock" (corporate jargon)
+- "emerged as" (AI-speak)
+- any individual name in [shareable section] (privacy/tone)
+- "—" more than 2 times (em-dash overuse)
+Pass: Zero matches found
+Fail: One or more matches found
+```
+
+These are high-signal, low-effort, and agents score them consistently. Build the list over time from actual corrections.
+
 ---
 
 ## common mistakes

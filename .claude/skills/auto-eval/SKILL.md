@@ -1,5 +1,5 @@
 ---
-name: autoresearch
+name: autoeval
 description: "Autonomously optimize any Claude Code skill by running it repeatedly, scoring outputs against binary evals, mutating the prompt, and keeping improvements. Based on Karpathy's autoresearch methodology. Use when: optimize this skill, improve this skill, run autoresearch on, make this skill better, self-improve skill, benchmark skill, eval my skill, run evals on. Outputs: an improved SKILL.md, a results log, and a changelog of every mutation tried."
 ---
 
@@ -32,9 +32,11 @@ Take any existing skill, define what "good output" looks like as binary yes/no c
 1. **Target skill** — Which skill do you want to optimize? (need the exact path to SKILL.md)
 2. **Test inputs** — What 3-5 different prompts/scenarios should we test the skill with? (variety matters — pick inputs that cover different use cases so we don't overfit to one scenario)
 3. **Eval criteria** — What 3-6 binary yes/no checks define a good output? (these are your "test questions" — see [references/eval-guide.md](references/eval-guide.md) for how to write good evals)
-4. **Runs per experiment** — How many times should we run the skill per mutation? Default: 5. (more runs = more reliable scores, but slower and more expensive. 5 is the sweet spot for most skills.)
-5. **Run interval** — How often should experiments cycle? Default: every 2 minutes. (shorter = faster iteration, but costs more)
-6. **Budget cap** — Optional. Max number of experiment cycles before stopping. Default: no cap (runs until you stop it).
+4. **Reference corpus** — Optional but powerful for voice/style skills. Does the user have 3-5 real examples of good output they actually used? If yes, collect them into a `references/golden-examples/` folder. These become eval anchors — the agent compares generated output against them during scoring. (see "reference corpus eval" below)
+5. **Banned patterns** — Optional. A list of words, phrases, or regex patterns that should never appear in the output. Build this from known anti-patterns. These are the highest-signal, lowest-effort evals. (see [references/eval-guide.md](references/eval-guide.md) "Banned-pattern evals" section)
+6. **Runs per experiment** — How many times should we run the skill per mutation? Default: 5. (more runs = more reliable scores, but slower and more expensive. 5 is the sweet spot for most skills.)
+7. **Run interval** — How often should experiments cycle? Default: every 2 minutes. (shorter = faster iteration, but costs more)
+8. **Budget cap** — Optional. Max number of experiment cycles before stopping. Default: no cap (runs until you stop it).
 
 ---
 
@@ -55,7 +57,9 @@ Do NOT skip this. You need to understand what the skill does before you can impr
 
 Convert the user's eval criteria into a structured test. Every check must be binary — pass or fail, no scales.
 
-**Format each eval as:**
+**Three types of evals (use all three when applicable):**
+
+### a) Standard binary evals
 
 ```
 EVAL [number]: [Short name]
@@ -64,11 +68,37 @@ Pass condition: [What "yes" looks like — be specific]
 Fail condition: [What triggers a "no"]
 ```
 
+### b) Banned-pattern evals
+
+Compile the user's banned patterns into a single eval. These are the highest-signal checks because they're greppable and agents score them consistently. Build the list from: the skill's existing exclude/avoid rules, anti-patterns the user has corrected in the past, and jargon or filler patterns common to AI output.
+
+```
+EVAL [N]: No banned patterns
+Question: Does the output contain zero matches from the banned list?
+Banned list: [list every banned string/phrase/regex]
+Pass: Zero matches found
+Fail: One or more matches found
+```
+
+### c) Reference corpus evals (for voice/style skills)
+
+If the user provided golden examples in `references/golden-examples/`, add a comparative eval. Present the agent with the generated output alongside one reference example and ask:
+
+```
+EVAL [N]: Voice match
+Question: Could this output and the reference example have been written by the same person?
+Pass: Tone, structure, word choice, and level of detail are consistent with the reference
+Fail: Output reads noticeably different — more formal, more verbose, different structure, or uses patterns absent from the references
+```
+
+This catches voice drift that no checklist will find. It's subjective but surprisingly reliable when the agent has concrete examples to compare against, not just a description of the desired voice.
+
 **Rules for good evals:**
 - Binary only. Yes or no. No "rate 1-7" scales. Scales compound variability and give unreliable results.
 - Specific enough to be consistent. "Is the text readable?" is too vague. "Are all words spelled correctly with no truncated sentences?" is testable.
 - Not so narrow that the skill games the eval. "Contains fewer than 200 words" will make the skill optimize for brevity at the expense of everything else.
 - 3-6 evals is the sweet spot. More than that and the skill starts parroting eval criteria back instead of actually improving.
+- Banned-pattern evals count as one eval regardless of how many patterns are in the list.
 
 See [references/eval-guide.md](references/eval-guide.md) for detailed examples of good vs bad evals.
 
@@ -301,16 +331,51 @@ Result: Hit 39/40. One remaining failure: a complex diagram with overlapping lab
 
 ---
 
+## step 8: post-deployment correction tracking (optional but high-value)
+
+The eval loop catches problems you can anticipate. But the best eval signal comes from what the user has to fix *after* running the improved skill in production. This step closes that gap.
+
+**After the user runs the improved skill on real work:**
+
+1. Ask: "what did you have to manually change before using the output?"
+2. For each correction, identify the specific pattern that triggered it:
+   - User removed all names? → add "no individual names" to banned-pattern eval
+   - User rewrote the opener? → add the opener pattern to banned list
+   - User changed the tone? → collect the before/after as a reference pair
+3. Convert each correction into a new eval criterion or banned pattern
+4. Run one more experiment cycle with the expanded eval suite
+5. Append the new evals to the eval suite file for future runs
+
+**Why this matters:** the auto-eval loop optimizes against your *predicted* failure modes. Post-deployment corrections reveal the failure modes you didn't predict. Every correction that gets converted into an eval makes the next run better. This is how the skill compounds — the eval suite grows from real usage, not just upfront guesses.
+
+**Format for tracking corrections:**
+```
+## Correction log — [skill name]
+
+### [date]
+- User changed: [what they edited]
+- Pattern: [the specific string/structure that was wrong]
+- New eval: [the binary check that would have caught this]
+- Added to: [banned list / new eval / reference corpus]
+```
+
+Store this in `autoresearch-[skill-name]/corrections.md`. It's the bridge between "lab performance" and "production performance."
+
+---
+
 ## how this connects to other skills
 
 **What feeds into autoresearch:**
 - Any existing skill that needs optimization
 - User-defined eval criteria (or help them define evals using the eval guide)
+- Post-deployment corrections from real usage (step 8)
+- Reference corpus of known-good outputs for voice/style skills
 
 **What autoresearch feeds into:**
 - The improved skill replaces the original
 - The changelog can be passed to future models for continued optimization
 - The eval suite can be reused whenever the skill is updated
+- The correction log feeds the next optimization cycle
 
 ---
 
@@ -320,10 +385,15 @@ A good autoresearch run:
 
 1. **Started with a baseline** — never changed anything before measuring the starting point
 2. **Used binary evals only** — no scales, no vibes, no "rate this 1-10"
-3. **Changed one thing at a time** — so you know exactly what helped
-4. **Kept a complete log** — every experiment recorded, kept or discarded
-5. **Improved the score** — measurable improvement from baseline to final
-6. **Didn't overfit** — the skill got better at the actual job, not just at passing the specific test inputs
-7. **Ran autonomously** — didn't stop to ask permission between experiments
+3. **Used banned-pattern evals** — converted known anti-patterns into greppable checks
+4. **Used reference examples** — for voice/style skills, compared against real human-written outputs
+5. **Changed one thing at a time** — so you know exactly what helped
+6. **Kept a complete log** — every experiment recorded, kept or discarded
+7. **Improved the score** — measurable improvement from baseline to final
+8. **Didn't overfit** — the skill got better at the actual job, not just at passing the specific test inputs
+9. **Ran autonomously** — didn't stop to ask permission between experiments
+10. **Tracked post-deployment corrections** — captured what the user still had to fix and fed it back into the eval suite
 
 If the skill "passes" all evals but the actual output quality hasn't improved — the evals are bad, not the skill. Go back to step 2 and write better evals.
+
+If the user has to make the same correction twice after the loop finishes — the correction tracking (step 8) isn't running. That correction should already be an eval.
