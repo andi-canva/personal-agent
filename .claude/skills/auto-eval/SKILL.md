@@ -21,7 +21,7 @@ Take any existing skill, define what "good output" looks like as binary yes/no c
 4. Keeps mutations that improve the score, discards the rest
 5. Repeats until the score ceiling is hit or the user stops it
 
-**Output:** An improved SKILL.md + `results.tsv` log + `changelog.md` of every mutation attempted + a live HTML dashboard you can watch in your browser.
+**Output:** An improved SKILL.md + `results.tsv` score log + `changelog.md` of every mutation attempted.
 
 ---
 
@@ -111,64 +111,16 @@ Example: 4 evals × 5 runs = max score of 20.
 
 ---
 
-## step 3: generate the live dashboard
-
-Before running any experiments, create a live HTML dashboard at `autoresearch-[skill-name]/dashboard.html` and open it in the browser.
-
-The dashboard must:
-- Auto-refresh every 10 seconds (reads from results.tsv)
-- Show a score progression line chart (experiment number on X axis, pass rate % on Y axis)
-- Show a colored bar for each experiment: green = keep, red = discard, blue = baseline
-- Show a table of all experiments with: experiment #, score, pass rate, status, description
-- Show per-eval breakdown: which evals pass most/least across all runs
-- Show current status: "Running experiment [N]..." or "Idle"
-- Use clean styling with soft colors (white background, pastel accents, clean sans-serif font)
-
-Generate the dashboard as a single self-contained HTML file with inline CSS and JavaScript. Use Chart.js loaded from CDN for the line chart. The JS should fetch `results.json` (which you update after each experiment alongside results.tsv) and re-render.
-
-**Open it immediately** after creating it: `open dashboard.html` (macOS) so the user can see it in their browser.
-
-**Update `results.json`** after every experiment so the dashboard stays current. The JSON format:
-
-```json
-{
-  "skill_name": "[name]",
-  "status": "running",
-  "current_experiment": 3,
-  "baseline_score": 70.0,
-  "best_score": 90.0,
-  "experiments": [
-    {
-      "id": 0,
-      "score": 14,
-      "max_score": 20,
-      "pass_rate": 70.0,
-      "status": "baseline",
-      "description": "original skill — no changes"
-    }
-  ],
-  "eval_breakdown": [
-    {"name": "Text legibility", "pass_count": 8, "total": 10},
-    {"name": "Pastel colors", "pass_count": 9, "total": 10}
-  ]
-}
-```
-
-When the run finishes (user stops it or ceiling hit), update `status` to `"complete"` so the dashboard shows a "Done" state with final summary.
-
----
-
-## step 4: establish baseline
+## step 3: establish baseline
 
 Run the skill AS-IS before changing anything. This is experiment #0.
 
 1. Create a working directory: `autoresearch-[skill-name]/` inside the skill's folder
 2. Create `results.tsv` with the header row
-3. Create `results.json` and `dashboard.html`, then open the dashboard in the browser
-4. Back up the original SKILL.md as `SKILL.md.baseline`
-5. Run the skill [N] times using the test inputs
-6. Score every output against every eval
-7. Record the baseline score and update both results.tsv and results.json
+3. Back up the original SKILL.md as `SKILL.md.baseline`
+4. Run the skill [N] times using the test inputs
+5. Score every output against every eval
+6. Record the baseline score in results.tsv
 
 **results.tsv format (tab-separated):**
 
@@ -181,7 +133,7 @@ experiment	score	max_score	pass_rate	status	description
 
 ---
 
-## step 5: run the experiment loop
+## step 4: run the experiment loop
 
 This is the core autoresearch loop. Once started, run autonomously until stopped.
 
@@ -229,7 +181,7 @@ This is the core autoresearch loop. Once started, run autonomously until stopped
 
 ---
 
-## step 6: write the changelog
+## step 5: write the changelog
 
 After each experiment (whether kept or discarded), append to `changelog.md`:
 
@@ -247,7 +199,7 @@ This changelog is the most valuable artifact. It's a research log that any futur
 
 ---
 
-## step 7: deliver results
+## step 6: deliver results
 
 When the user returns or the loop stops, present:
 
@@ -263,12 +215,10 @@ When the user returns or the loop stops, present:
 
 ## output format
 
-The skill produces four files in `autoresearch-[skill-name]/`:
+The skill produces three files in `autoresearch-[skill-name]/`:
 
 ```
 autoresearch-[skill-name]/
-├── dashboard.html       # live browser dashboard (auto-refreshes)
-├── results.json         # data file powering the dashboard
 ├── results.tsv          # score log for every experiment
 ├── changelog.md         # detailed mutation log
 └── SKILL.md.baseline    # original skill before optimization
@@ -331,7 +281,7 @@ Result: Hit 39/40. One remaining failure: a complex diagram with overlapping lab
 
 ---
 
-## step 8: post-deployment correction tracking (optional but high-value)
+## step 7: post-deployment correction tracking (optional but high-value)
 
 The eval loop catches problems you can anticipate. But the best eval signal comes from what the user has to fix *after* running the improved skill in production. This step closes that gap.
 
