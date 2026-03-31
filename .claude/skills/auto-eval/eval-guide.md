@@ -143,6 +143,19 @@ Before finalizing an eval, ask:
 
 ---
 
+## When Auto-Eval Works vs When It Doesn't
+
+| Good fit | Poor fit |
+|----------|----------|
+| Classification tasks (intent routing, triage) with labeled datasets | Open-ended generation (creative writing, strategy docs) |
+| Tasks with objective/measurable criteria (accuracy, format compliance) | Tasks where requirements keep expanding |
+| Tasks with stable eval criteria that don't change run-to-run | Tasks where "good" is highly subjective and context-dependent |
+| Skills where you have 5+ golden examples of good output | Skills with no reference outputs |
+
+If your task is a poor fit, don't try to force autonomous evals. Use the manual correction loop instead: run the skill, fix the output yourself, convert each fix into a new eval criterion. The human stays in the loop every cycle.
+
+---
+
 ## Template
 
 Copy this for each eval:
