@@ -1,19 +1,21 @@
 # Your Personal Agent Harness
 
-Become agent-native by building your own personal agent harness. No code, no database — just a folder of markdown files and an AI that understands your context, goals, and priorities. Your agent reads your files, learns your preferences, remembers what you've learned, and helps you stay focused on what actually matters. It gets smarter every week.
+Your AI chief-of-staff — a personal operating system for product managers that runs the operating rhythm, compounds learnings, and gets smarter every week. No code, no database — just a folder of markdown files and an AI that understands your context, goals, and priorities.
 
 Works with **Claude Code Desktop**, **Claude Code CLI**, **Claude Co-Work**, **Cursor**, or any agent that reads local files. The harness is the folder structure and skills — the tool is just the delivery mechanism.
 
 ## What It Does
 
-- **Goal-driven task management** — every task ties back to your stated goals
-- **Weekly + daily planning** — `/plan-week` on Monday sets the full week, `/today` each morning builds from it
-- **Backlog triage** — brain-dump into `BACKLOG.md`, then run `/backlog` to turn raw notes into structured tasks
-- **Weekly review** — `/weekly-wrap` reviews progress, produces a shareable update, and compounds learnings into memory
-- **1:1 prep** — `/121 [person]` pulls context from notes, tasks, and tools to generate talking points, and maintains ongoing relationship docs at `Context/121s/`
-- **Meeting prep built into /today** — 1:1s get full talking points (Discuss, Ask, Strategic, Close the loop); normal meetings get a 1-bullet action/perspective
+- **Chief-of-staff operating rhythm** — weekly plans, daily focus, meeting prep, bias checks
+- **Three-layer architecture** — raw sources, LLM-maintained wiki synthesis, lean schema
+- **Conditional context loading** — `.claude/rules/` with glob triggers, not a bloated root file
+- **Compound-on-Touch** — every skill silently fixes stale data and promotes valuable outputs
+- **Goal-driven prioritization** based on your vision
+- **1:1 prep** — `/121 [person]` pulls context and maintains ongoing relationship docs
+- **Meeting prep built into /today** — 1:1s get full talking points; normal meetings get a 1-bullet action
 - **Content drafting** — `/draft [topic]` writes in your voice, not generic AI
-- **Document steelmanning** — `/steelman-advice [doc]` runs 3-5 parallel critique perspectives to surface blind spots and concrete improvements
+- **Document steelmanning** — `/steelman-advice [doc]` runs parallel critique perspectives
+- **System health lint** — `/verify` checks for contradictions, stale claims, orphan files, missing pages
 - **Persistent memory** — your agent remembers preferences, decisions, and lessons across sessions
 
 ## Quick Start
@@ -93,8 +95,6 @@ Check out `Tasks/Week-2026-W01.md` — it's a pre-filled example showing how the
 
 **Daily:**
 - `/today` — get your daily plan (reads from the weekly plan if it exists)
-- Drop tasks into `BACKLOG.md` throughout the day
-- `/backlog` — triage your backlog into structured task files
 - *"Remember that I prefer..."* — save preferences to memory
 
 **Weekly:**
@@ -108,77 +108,114 @@ Check out `Tasks/Week-2026-W01.md` — it's a pre-filled example showing how the
 - `/slack-unactioned` — triage unread Slack into Tonight vs Tomorrow
 - `/unblock [task]` — diagnose a stalled task
 - `/bias` — audit decisions against your motivational blind spots
+- `/verify` — lint the knowledge system for health issues
 
-## Folder Structure
+## Directory Structure
 
 ```
 personal-agent/
-├── GOALS.md               # Your goals, vision, and priorities (fill this in first)
-├── BACKLOG.md             # Raw capture inbox — dump ideas here
-├── AGENTS.md              # Agent instructions (how the AI behaves)
-├── CLAUDE.md              # Points to AGENTS.md (auto-loaded by Claude)
-├── Weekly Kanban.md       # Sprint board — visual kanban with [[wiki-links]]
+├── GOALS.md                # Your goals, vision, and priorities (fill this in first)
+├── AGENTS.md               # Agent instructions (~85 lines — lean by design)
+├── CLAUDE.md               # Thin import → @AGENTS.md
+├── Weekly Kanban.md        # Sprint board — visual kanban with [[wiki-links]]
 │
-├── Tasks/                 # Structured task files with metadata
-│   ├── Backlog/           # Initiative/track files — strategic context
-│   └── Done/              # Completed tasks (archived here)
+├── Tasks/                  # Structured task files with metadata
+│   ├── Backlog/            # Initiative/track files — strategic context
+│   └── Done/               # Completed tasks (archived here)
 │
-├── Context/               # Persistent personal context
-│   ├── Memory/            # Facts, preferences, and compounded learnings
-│   │   └── Reference/     # Writing-style guides, frameworks, company context
-│   ├── 121s/              # Ongoing 1:1 relationship docs (maintained by /121)
-│   ├── Knowledge/         # Accumulated knowledge and reference material
-│   │   ├── Product/       # Product concepts, patterns, methodologies
-│   │   ├── Frameworks/    # Strategic and analytical frameworks
-│   │   └── Lenny/         # Insights from Lenny's Newsletter/Podcast
-│   ├── Document Hub/      # Strategy docs, PRDs, reference material
-│   ├── Meeting Notes/     # Meeting summaries
-│   └── Progress Updates/  # Weekly wraps and reviews
+├── Context/                # Persistent personal context
+│   ├── Memory/             # Facts, preferences, and compounded learnings
+│   ├── 121s/               # Ongoing 1:1 relationship docs (maintained by /121)
+│   ├── Knowledge/          # Accumulated knowledge and reference material
+│   ├── Document Hub/       # Strategy docs, PRDs, reference material
+│   ├── Meeting Notes/      # Meeting summaries
+│   ├── Progress Updates/   # Weekly wraps and reviews
+│   └── Reference/          # Writing-style guides, frameworks, company context
 │
-├── Notes/                 # Daily notes and thinking
-├── Bookmarks/             # Reading list and saved links
+├── Notes/                  # Daily notes and thinking
+├── Bookmarks/              # Reading list and saved links
 │
-└── .claude/skills/        # Slash commands (auto-discovered)
-    ├── today/             # /today — daily planning
-    ├── plan-week/         # /plan-week — weekly planning
-    ├── backlog/           # /backlog — triage inbox
-    ├── weekly-wrap/       # /weekly-wrap — weekly review + learnings
-    ├── 121/               # /121 — 1:1 meeting prep
-    ├── draft/             # /draft — content drafting
-    ├── unblock/           # /unblock — task diagnosis
-    ├── bias/              # /bias — motivational bias audit
-    ├── steelman-advice/   # /steelman-advice — multi-perspective document critique
-    ├── slack-unactioned/  # /slack-unactioned — triage unread messages
-    └── onboard/           # /onboard — first-time setup
+└── .claude/
+    ├── skills/             # Slash commands (auto-discovered)
+    ├── agents/             # Sub-agents for /review
+    └── rules/              # Conditional rules (load when relevant files are touched)
 ```
 
-## How It Works
+## System Concepts
 
-Three layers:
+### Three-Layer Architecture
 
-1. **Context** (`GOALS.md`, `Context/Memory/`) — the agent reads these to understand who you are and what you're working toward. The richer your context, the better the output. Without this, every session is a capable stranger. With it, every session picks up where the last one left off.
+The system follows a three-layer pattern (inspired by Karpathy's [LLM-Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)):
 
-2. **Tasks** (`Tasks/`, `BACKLOG.md`, `Weekly Kanban.md`) — structured markdown with YAML frontmatter. Each task has a priority, status, description, and goal reference. The Kanban board gives you a visual sprint view.
+- **Raw sources** (Meeting Notes, Knowledge, Document Hub) — immutable input. The agent reads from these but never modifies them.
+- **Wiki layer** (Context/Memory/ domain indexes, by-topic.md, learnings.md) — LLM-maintained synthesis. The agent updates these to keep knowledge current and cross-referenced.
+- **Schema** (AGENTS.md + .claude/rules/ + skills) — governs behavior. Co-evolved by you and the agent.
 
-3. **Skills** (`.claude/skills/`) — reusable workflows triggered by slash commands. They combine file reading, reasoning, and tool use into repeatable processes that reference your goals and adapt to your priorities.
+### Progressive Disclosure via `.claude/rules/`
+
+AGENTS.md is intentionally lean (~85 lines). Detailed process rules live in `.claude/rules/` with glob-based triggers so they only load when relevant:
+
+| Rule file | Loads when touching | Contains |
+|-----------|-------------------|----------|
+| `task-lifecycle.md` | `Tasks/**` | Task completion, promotion, daily guidance |
+| `templates.md` | `Tasks/**`, `Context/**`, `Notes/**` | File templates (task, knowledge, meeting note) |
+| `compound-on-touch.md` | `Tasks/**`, `Context/Memory/**` | Detailed compounding rules, conversation promotion |
+| `topic-vocabulary.md` | `Tasks/**`, `Context/**` | Standard topic tags for frontmatter |
 
 ### The Planning Loop
 
 ```
 Monday: /plan-week → creates Tasks/Week-YYYY-WNN.md with all 5 days
-Daily:  /today → reads from weekly plan, preps every meeting (1:1s + normal), updates the scratchpad
+Daily:  /today → reads from weekly plan, preps every meeting, updates the scratchpad
 Friday: /weekly-wrap → reviews the week, produces shareable update, compounds learnings
 ```
+
+### Week File Lifecycle
+
+`Tasks/Week-YYYY-WNN.md` lives in Tasks/ root during the active week. When `/weekly-wrap` runs, it:
+
+1. Closes the week file (marks outcomes, maps to wrap)
+2. Moves the file to `Tasks/Done/Week-YYYY-WNN.md`
+3. Carries forward incomplete items to the wrap's "CW[XX+1] Focus" section
+4. Syncs the Kanban: clears "This Week", moves completed items to "Done"
+
+`/plan-week` then reads the prior wrap's carry-forwards and populates the new week + "This Week" column.
 
 ### The Compounding Loop
 
 ```
-/weekly-wrap distills insights → Context/Memory/learnings.md
-    → future sessions reference past learnings
-    → better advice → more learnings → repeat
+/plan-week (Mon) → references last week's learnings → better plan
+    ↓
+/today (daily) → fixes stale data it touches → cleaner system
+    ↓
+/weekly-wrap (Fri) → distills learnings + promotes outputs + rebuilds indexes → richer context
+    ↓
+next /plan-week → starts from better base → repeat
 ```
 
-Your agent after 4 weeks is meaningfully better than on day one.
+After 4 weeks, the system should have: richer Memory, up-to-date indexes, promoted outputs in the right folders, and standing principles distilled from patterns.
+
+Valuable conversation outputs also compound — when a session produces a synthesis, comparison, or decision framework worth keeping, the agent offers to file it into the wiki layer (domain indexes, Knowledge, or learnings).
+
+### How to Approach Tasks
+
+- **Break it down first.** Outline non-trivial tasks (3+ steps) before starting. Re-plan immediately if things go sideways.
+- **One task, one outcome.** Keep tasks focused — if it has two distinct outcomes, it's two tasks.
+- **Verify before marking done.** Check the output against the original goal. Don't mark done just because steps were completed.
+- **Anticipate follow-ups.** If a task will obviously trigger a next step, flag it or create the follow-on task immediately.
+- **Root causes, not band-aids.** Fix the underlying issue, not the symptom. If the same problem keeps recurring, change the process.
+- **Use sub-agents for complex work.** Kick off parallel research or drafting agents for independent pieces rather than doing everything sequentially.
+
+### Categories
+
+- **technical**: build, fix, configure
+- **outreach**: communicate, meet
+- **research**: learn, analyze
+- **writing**: draft, document
+- **content**: blog posts, social media, public writing
+- **admin**: operations, finance, logistics
+- **personal**: health, routines
+- **other**: everything else
 
 ## How This Relates to Co-Work
 
