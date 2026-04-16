@@ -13,6 +13,19 @@ When the user invokes `/121 [person name]`, run through all steps in sequence.
 
 If no person name is provided, ask: "Who's the 1:1 with?"
 
+### Step 0: First-time Meeting Bootstrap
+
+**Triggers when no `Context/121s/[Person Name].md` exists.** Run this before Step 1 to build context from scratch so talking points are grounded, not generic.
+
+1. **Search Slack for the person** — use `slack_search_users` to find their user ID. Then read the DM channel: last 20 messages or past 30 days, whichever is fewer. Extract: topics discussed, open questions, commitments, tone of the relationship.
+2. **Check calendar history** — search Google Calendar for previous meetings with this person (past 90 days). Note frequency, meeting titles, and any patterns (recurring vs. ad-hoc).
+3. **Read the meeting invite** — check today's calendar event for this person. Read the description, note when the invite was created (recent creation = likely ad-hoc/specific request), and extract any linked docs or agenda items.
+4. **Check shared channels** — search Slack for threads where both you and this person are active in the past 30 days. Surface shared projects or discussions.
+5. **Synthesize** — from DM history + calendar + channels, determine: (a) likely reason for this meeting, (b) shared context/projects, (c) open threads or commitments, (d) relationship depth (frequent collaborator vs. first real conversation).
+6. **Create the 121 doc** with `slack_user_id` and `slack_dm_channel` pre-populated from the Slack lookup. Then proceed to Step 1 which will now find the doc.
+
+If Slack MCP is unavailable AND no calendar history exists, fall back to: "No DM or meeting history found. Open with: what's on your mind?"
+
 ### Step 1: Gather Context on This Person
 
 1. Check `Context/121s/[Person Name].md` — if it exists, read the open loops and recent session log entries first (this is the richest source)
@@ -36,14 +49,7 @@ If no person name is provided, ask: "Who's the 1:1 with?"
 
 ### Step 4: Generate Talking Points
 
-Output four sections using the format below. Each section should have 3-5 short bullets max. The user will copy-paste a subset directly into their 1:1 doc, so every bullet must be self-contained and useful on its own.
-
-**Sections:**
-
-1. **Discuss** — Topics to raise: open loops, updates to share, things to demo or walk through. Lead with context ("Personal-OS workshop scaling: ...") not naked questions.
-2. **Ask** — Direct questions where you need their input, perspective, or a decision. Frame each as a question or a position + question.
-3. **Strategic** — Bigger-picture alignment topics: shared goals, org design, opportunities to explore together. Career/development if this is a direct report.
-4. **Close the loop** — Unresolved action items from previous meetings or Slack threads that need a status check or handoff.
+Output a **flat list of max 5 bullets**. No sections, no headers. Pick the 5 highest-signal items across updates, questions, open loops, and strategic topics. Each bullet must be self-contained — the user will cherry-pick and copy-paste directly into their 1:1 doc. Lead with context, not naked questions.
 
 ### Step 5: Update Ongoing Person Doc
 
@@ -100,8 +106,7 @@ Present the talking points and ask: "Anything to add or adjust?"
 
 ## Output Format
 
-- One screen max. Short bullets. No headers beyond the four section names.
+- **Max 5 bullets total.** Flat list, no section headers.
 - Use `*` bullet style (not `-`) for copy-paste compatibility with Google Docs / Notion.
-- Sub-bullets with 4-space indent for supporting context under a topic.
-- No bold section headers — just the section name followed by a blank line and bullets.
+- Each bullet is one line with optional 4-space indented sub-bullet for context.
 - The user will cherry-pick bullets, so each one should make sense standalone.

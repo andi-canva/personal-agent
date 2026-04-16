@@ -17,10 +17,10 @@ Read in parallel:
 
 1. **`GOALS.md`** — extract: quarterly objectives, key relationships (named people), active focus areas, current blockers
 2. **`Context/Memory/active-tasks.md`** — extract topic tags and keywords from each active task
-3. **`Tasks/Backlog/*.md`** — read only the `description:` frontmatter field from each file. This gives you the backlog inventory without loading full content.
+3. **`Tasks/Backlog/*.md`** — read only the `description:` frontmatter field from each file. This gives you the initiative inventory without loading full content.
 4. **`Tasks/Done/`** — skim file names and descriptions for tasks completed in the past 4 weeks that might have adjacent ongoing activity
 
-From all of this, build a **signal vocabulary**: 15–20 keywords/phrases covering goals, active tasks, and backlog topics. These are your Slack search terms. Examples derived from typical context: "multi-agent", "Help Assistant", "AIRR", "voice agent", "mobile retention", "agentic onboarding", "self-improving loops", "CN team", "localization", "activation scaffolding".
+From all of this, build a **signal vocabulary**: 15–20 keywords/phrases covering goals, active tasks, and initiative topics. These are your Slack search terms derived from your GOALS.md and active Tasks/ files.
 
 ---
 
@@ -99,6 +99,8 @@ Good framing: "Your **[Backlog Item]** — [@person] in #[channel] just [did X],
 ```
 
 Two lines per item maximum. The whole digest should fit on one screen. If a section has nothing real to surface, omit it rather than padding.
+
+**Every single item MUST include a Slack permalink** (the `permalink` field from search results or the link constructed from channel_id + message_ts). No exceptions — if you can't link it, don't include it. When searching, always request `detailed` response format so you get permalinks back. Store permalinks as you scan; do not rely on reconstructing them later.
 
 ---
 

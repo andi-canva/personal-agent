@@ -20,8 +20,8 @@ When the user invokes `/weekly-wrap`, run all steps in sequence **without waitin
 Pull everything from the target week before synthesising anything.
 
 1. **Weekly scratchpad** — read `Tasks/Week-YYYY-WNN.md` (ISO week number, e.g. `Tasks/Week-2026-W11.md`)
-   - Count ticked `[x]` vs unticked `[ ]` items across all daily sections
-   - Extract all free-form notes, decisions, and meeting entries from Notes sections
+   - Count ticked `[x]` vs unticked `[ ]` items across all daily sections (check `### Do Next` and `### Follow-ups` sections; for older weeks also check `### Planned`, `### Deep Work`, `### Quick Wins`)
+   - Extract notes, decisions, and meeting outcomes from `### Log` sections (for older weeks also check `### Decisions & context`, `### Blockers`, `### Notes`)
    - Note which days had entries
 2. **Meeting notes** — scan `Context/Meeting Notes/` for files dated this week
    - Extract: attendee names, decisions made, action items with owners, blockers raised
@@ -33,9 +33,9 @@ Pull everything from the target week before synthesising anything.
 6. **Slack** — if Slack MCP tools are available, pull the week's biggest activity:
    - Search DMs and key channels for messages involving your name, team, or active initiatives
    - Look for: decisions in threads, action items, blockers, escalations, announcements
-   - Channels to prioritise: Help Assistant, AIHX, CanvaAI, mobile, CN team, DMs from Rob, John, Jay, Sophie, Dean, Otavio
+   - Channels to prioritise: your key team channels and DMs from priority stakeholders (configure in GOALS.md or Context/Memory/)
    - If Slack MCP tools are unavailable, note this and proceed — don't block the wrap
-7. **Jira / Confluence** — if MCP tools are available, check for status changes on key initiatives. If unavailable, skip.
+7. **Project tracker / Confluence** — if MCP tools are available, check for status changes on key initiatives. If unavailable, skip.
 
 ---
 
@@ -137,19 +137,18 @@ completion jumped from 17% to 52%.
 [❌ Internal metrics. ❌ Avoidance/bias language. ❌ Changelog tone.]
 
 ## What happened
-- Mid-cycle review first cut shared with Sally/Danne — synthesises AIRR
-  trajectory, 46K bypass impact, Kerry's leaky bucket findings
+- Quarterly review first cut shared with design leads — synthesises key metric
+  trajectory, bypass impact, retention findings
   [❌ Names 3 people. ❌ Implementation detail.]
-- CN AI proposal rewrite completed — reframed around Chinese LLM leverage for
-  Help, dropped mobile UX rationale, added attrition context. 3 weeks of
+- Initiative rewrite completed — reframed around core leverage, 3 weeks of
   rolling finally broken with a bounded 90min block
   [❌ Names nobody but explains the recipe. ❌ Internal avoidance tracking.]
-- Side quest operating model aligned — Simone session (Mar 18) set ownership
-  pairs, staged lifecycle, 8-week cycles
+- Operating model aligned — session (Mar 18) set ownership pairs, staged
+  lifecycle, 8-week cycles
   [❌ Names person. ❌ Date in shareable.]
 
 ## On my mind the coming weeks
-- I want to get the CN AI proposal to Mark before the quarter ends
+- I want to get the initiative proposal to leadership before the quarter ends
   [❌ Names the manager. ❌ This is a task, not a tension.]
 ```
 
@@ -161,11 +160,11 @@ This section is internal — **names, goal tags, and detailed breakdowns are OK 
 
 ```
 ## Status Check
-Track the **team goals from Jira** (CG-712, CG-709, etc.), not personal objectives. These are the goals your PMs own.
+Track the **team goals from your project tracker**, not personal objectives. These are the goals your team owns.
 
 | Team Goal | Owner | Status | Notes |
 |-----------|-------|--------|-------|
-| [Goal name from Jira] | [PM] | ✅ / ⚠️ / 🔴 / ⏸️ | [short note on progress or blocker] |
+| [Goal name] | [Owner] | ✅ / ⚠️ / 🔴 / ⏸️ | [short note on progress or blocker] |
 
 ## CW[XX+1] Focus
 
@@ -228,10 +227,11 @@ Each wrap should make the next one better:
    - If any task has rolled 3+ weeks without progress, flag it explicitly in the wrap output
 
 4. **Kanban sync** — `Weekly Kanban.md` has 4 columns: **Backlog → This Week → In Progress → Done**
-   - Move completed tasks (`status: d`) to "Done" column, mark with `[x]`
-   - Move items that were "This Week" but didn't complete back to "Backlog" or "In Progress" as appropriate
+   - Move completed tasks (`status: d`) to "Done" column, mark with `[x]` — **remove them from their source column** (In Progress, This Week, or Backlog)
+   - Move items that were "This Week" but didn't complete back to "Backlog" or "In Progress" as appropriate — **remove from "This Week"**
    - Clear the "This Week" column (it gets repopulated by `/plan-week`)
    - Add the closed week file to "Done": `- [x] [[Week-YYYY-WNN]] — CW[XX] closed ([summary])`
+   - **Dedup check:** before finishing, scan the entire board and remove any item that appears in more than one column (keep the most-advanced column: Done > In Progress > This Week > Backlog). Ensure all Done items are marked `[x]`.
 
 5. **Promotion check** — for each completed task, check if it produced promotable outputs:
    - PRDs, strategy docs, decision records → flag for `Context/Document Hub/`

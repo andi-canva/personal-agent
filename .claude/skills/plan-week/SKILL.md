@@ -18,7 +18,7 @@ Run all steps in sequence. Be decisive — make best-guess recommendations rathe
 1. Scan `Tasks/` root for all active tasks (`status: s` or `status: n`) — note priorities and any due dates
 2. Scan `Tasks/Backlog/` and read files relevant to this week's priorities — for strategic context on active initiatives
 3. Read last week's wrap if available (`Context/Progress Updates/Q[N]-YYYY Weekly Wraps/CW[XX-1].md`) — what carried forward, what's still unresolved
-4. **Slack** — check for anything from the weekend or Friday that sets context for this week: decisions, escalations, urgent threads from key stakeholders in the , John, Jay, Sophie, Dean, Otavio, or key channels (Help Assistant, AIHX, CanvaAI, mobile, CN team)
+4. **Slack** — check for anything from the weekend or Friday that sets context for this week: decisions, escalations, urgent threads from key stakeholders and priority channels (configure these in GOALS.md or Context/Memory/)
 5. **Google Calendar** (via Google Calendar MCP, if available):
    - Pull all events for this week (Monday–Friday): titles, attendees, times, descriptions
    - This feeds the meeting triage step — every meeting should appear in the triage table
@@ -106,9 +106,9 @@ Use this structure — pre-populate all 5 days based on the confirmed plan:
 2. [priority — goal ref]
 3. [priority — goal ref]
 
-### Meeting Triage
-| Meeting | Day | Time | Decision | Reason |
-|---------|-----|------|----------|--------|
+### Carry-forwards
+[Only include if items rolled from last week. Include weeks_rolling count so /today can detect stale items.]
+- [ ] [item] — [weeks_rolling: N] — [original strategy → new strategy if changed]
 
 ### Risks
 - [risk — mitigation]
@@ -120,67 +120,39 @@ Use this structure — pre-populate all 5 days based on the confirmed plan:
 
 ## Monday, [DD Mon]
 
-### Planned
-- [ ] [item from weekly plan]
-- [ ] [item from weekly plan]
+### Do Next
+- [ ] [item from weekly plan — goal ref]
+- [ ] [item from weekly plan — goal ref]
 
-### Deep Work
-_Filled in by /today_
-
-### Quick Wins
+### Meeting Prep
 _Filled in by /today_
 
 ### Follow-ups
 _Filled in by /today_
 
-### Meeting Prep
-_Filled in by /today — 1:1s get full talking points; normal meetings get 1 action/perspective bullet._
-
-### Meetings today
-_[Meeting name] with [names] @ [time] — [outcome]_
-
-### Decisions & context
-_Decisions made today: what, by whom, why._
-
-### Blockers
-_What stopped progress — owner + unblocking action._
-
-### Notes
-_Free-form._
+### Log
+_Outcomes, decisions, and notes from the day._
 
 ---
 
 ## Tuesday, [DD Mon]
 
-### Planned
-- [ ] [item from weekly plan]
-- [ ] [item from weekly plan]
+### Do Next
+- [ ] [item from weekly plan — goal ref]
 
-### Deep Work
-_Filled in by /today_
-
-### Quick Wins
+### Meeting Prep
 _Filled in by /today_
 
 ### Follow-ups
 _Filled in by /today_
 
-### Meetings today
-_..._
-
-### Decisions & context
-_..._
-
-### Blockers
-_..._
-
-### Notes
+### Log
 _..._
 
 ---
 
 ## Wednesday, [DD Mon]
-[same structure]
+[same 4-section structure: Do Next, Meeting Prep, Follow-ups, Log]
 
 ---
 
@@ -190,7 +162,7 @@ _..._
 ---
 
 ## Friday, [DD Mon]
-[same structure — Friday planned items should include: review week vs plan, prep /weekly-wrap inputs]
+[same structure — Friday Do Next should include: review week vs plan, prep /weekly-wrap inputs]
 
 ---
 ```
@@ -206,8 +178,9 @@ After saving the week file, silently do the following:
 1. **Kanban sync** — `Weekly Kanban.md` has 4 columns: **Backlog → This Week → In Progress → Done**
    - Populate the "This Week" column with the week's top priorities (linked to task files where they exist)
    - Items already in "In Progress" that are part of this week's plan stay in "In Progress"
-   - Items pulled from "Backlog" into this week move to "This Week"
+   - Items pulled from "Backlog" into this week move to "This Week" — **remove them from Backlog** (no item should appear in two columns)
    - Don't touch "Done" — that's managed by `/weekly-wrap`
+   - **Dedup check:** before finishing, scan the entire board and remove any item that appears in more than one column (keep the most-advanced column: Done > In Progress > This Week > Backlog)
 
 2. **Last week archival check** — if last week's `Tasks/Week-YYYY-WNN.md` still exists in Tasks/ root (not moved to Done/), move it to `Tasks/Done/`. The weekly-wrap should have done this, but catch it here as a safety net.
 
