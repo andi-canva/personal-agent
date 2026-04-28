@@ -13,6 +13,7 @@ Context/Memory/*.md
 Context/Document Hub/*.md
 !Context/Document Hub/TEMPLATE.md
 Context/Meeting Notes/*.md
+!Context/Meeting Notes/MEETING-TEMPLATE.md
 Context/Progress Updates/*.md
 !Context/Progress Updates/TEMPLATE.md
 Context/121s/*.md

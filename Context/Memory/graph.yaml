@@ -1,0 +1,73 @@
+# Relationship graph — people, projects, channels, and typed edges between them.
+#
+# Purpose: structured relationships that flat markdown can't express well.
+#   Q's this graph answers: "who do I collaborate with most?", "which projects
+#   are tied to this person?", "what channels keep surfacing around the same work?"
+#
+# What it is NOT: a replacement for task files, meeting notes, or learnings.
+# Synthesis stays in markdown. Relationships go here.
+#
+# Guidance:
+#   - Use `self` as the user's root person node
+#   - File path is the canonical anchor when a node has a `file:` pointer
+#   - `graph.yaml` is the source of truth for node ids, aliases, and typed
+#     relationships
+#   - Frontmatter arrays like `people`, `projects`, and `channels` should contain
+#     graph node ids only (snake_case)
+#   - First observation: weight 0.5, single evidence line
+#   - Repeated observations: bump weight by 0.1 (cap 1.0), update `last_seen`,
+#     append evidence
+#   - During weekly maintenance, halve weights for edges not seen in >4 weeks and
+#     prune edges that drop below 0.1
+#
+# Schema
+# nodes:
+#   <node_id>:                        # snake_case, stable, unique
+#     type: person | project | channel | company | initiative
+#     role: "<short role string>"     # optional, for person
+#     file: "<path>"                  # optional, link to the canonical markdown file
+#     aliases: ["<alt name>"]         # optional, mirrored on canonical pages when useful
+#     name: "<display name>"          # optional, for channels etc.
+#
+# edges:
+#   - source: <node_id>
+#     target: <node_id>
+#     type: <edge_type>               # see allowed list below
+#     weight: 0.0-1.0
+#     last_seen: "YYYY-MM-DD"
+#     evidence:
+#       - "<source> <date>: <brief description>"
+#
+# Allowed edge types:
+#   collaborates_with
+#   leads
+#   contributes_to
+#   discussed_in
+#   mentioned_in
+#   attended
+#   decided_on
+#   blocks
+
+nodes:
+  self:
+    type: person
+    role: "User"
+    aliases: []
+
+edges: []
+
+# Example node:
+#   jane_doe:
+#     type: person
+#     role: "Manager"
+#     file: "Context/121s/Jane Doe.md"
+#     aliases: ["Jane"]
+#
+# Example edge:
+# - source: self
+#   target: jane_doe
+#   type: collaborates_with
+#   weight: 0.5
+#   last_seen: "2026-04-29"
+#   evidence:
+#     - "1:1 2026-04-29"

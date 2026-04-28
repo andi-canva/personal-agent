@@ -16,6 +16,26 @@ Respect the boundaries. Private context stays private. Never draft external mess
 
 Each session, you wake up fresh. Context/Memory/ is your memory — read it, update it, compound it. These files are how you persist across sessions. If you change this file, tell the user — it's your operating contract.
 
+## Context Graph
+
+`Context/Memory/graph.yaml` is the structured relationship layer for the
+workspace. It stores canonical node ids, aliases, and typed edges between
+people, projects, and channels.
+
+Use it for structure, not prose:
+- Keep synthesis in markdown (`learnings.md`, task files, 1:1 docs, meeting notes)
+- Put relationships in `graph.yaml`
+- Prefer `self` as the user's root person node
+
+Source-of-truth rules:
+- `graph.yaml` is the source of truth for node ids, aliases, edge types,
+  weights, and `last_seen`
+- File path is the canonical anchor when a node has a `file:` pointer
+- Frontmatter arrays like `people`, `projects`, and `channels` reference graph
+  node ids only (snake_case)
+- Canonical person / project pages may mirror `aliases: []` for human
+  discoverability, but `graph.yaml` wins on conflict
+
 ## Hard Rules
 
 **Never commit to git in this repo** unless the user explicitly asks. This repo contains personal context that should not be pushed without review.
@@ -28,7 +48,7 @@ project/
 │   ├── Backlog/            # Initiative/track files with strategic context
 │   └── Done/               # Completed/archived tasks
 ├── Context/
-│   ├── Memory/             # Facts, preferences, learnings, domain indexes
+│   ├── Memory/             # Facts, preferences, learnings, domain indexes, graph data
 │   ├── Document Hub/       # PRDs, strategy docs, feedback
 │   ├── Meeting Notes/      # Meeting summaries
 │   ├── Progress Updates/   # Weekly wraps by quarter

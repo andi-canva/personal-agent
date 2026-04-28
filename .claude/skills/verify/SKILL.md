@@ -1,100 +1,87 @@
 ---
 name: verify
-description: "Check system health — missing descriptions, orphan files, stale links, description quality, contradictions, stale claims, missing pages."
+description: "Check system health — metadata gaps, graph integrity, alias sync, and referential integrity."
 ---
 
 # Verify
 
-Run a health check on the knowledge system to find gaps, stale links, and quality issues.
+Run a health check on the personal-agent workspace and surface the issues most
+likely to make future sessions less reliable.
 
 ## Instructions
 
-When the user invokes `/verify`, run all checks and present a consolidated report.
+When the user invokes `/verify`, run all checks and present a consolidated
+report.
 
 ### Check 1: Missing Descriptions
 
-Scan `Tasks/`, `Context/Knowledge/`, `Context/` for `.md` files without a `description:` field in frontmatter.
+Scan `Tasks/`, `Context/Meeting Notes/`, and `Context/Document Hub/` for `.md`
+files without a `description:` field in frontmatter.
 
-```
-rg -L --glob "*.md" --files-without-match "^description:" Tasks/ Context/Knowledge/ Context/
-```
+### Check 2: Link Health
 
-Report count and list the top 10 most important (by recency or priority).
+If `.claude/skills/link-audit/SKILL.md` exists, use the same link-health logic
+to identify broken links or disconnected active files. Summarise only the
+highest-signal issues in the `/verify` output.
 
-### Check 2: Missing Topics
+### Check 3: Graph Integrity
 
-Same scan but for files without `topics:` field.
+If `Context/Memory/graph.yaml` exists, validate:
 
-### Check 3: Orphan Files
+- YAML parses and has top-level `nodes` and `edges`
+- Every edge `source` / `target` resolves to a node
+- Every edge `type` is in the allowed list documented in `graph.yaml`
+- Every node `file:` pointer resolves to a real file
 
-Files in `Context/Knowledge/` that are NOT referenced by any domain index (`Context/Memory/*.md` — the domain-specific indexes like `multi-agent-architecture.md`, `product-management-craft.md`, etc.). Read each index and extract all `[[wiki-links]]`, then compare against files that exist.
+### Check 4: Graph Coverage
 
-### Check 4: Stale Index Links
+If `Context/Memory/graph.yaml` exists, check:
 
-Check each domain index in `Context/Memory/` for `[[wiki-links]]` that point to files that no longer exist or have been moved.
+- Every file in `Context/121s/*.md` other than `TEMPLATE.md` has a matching
+  `person` node with a `file:` pointer
+- Any canonical project page that declares `aliases:` has a matching `project`
+  or `initiative` node
+- Isolated nodes (zero incident edges), split by:
+  - has `file:`
+  - no `file:`
 
-### Check 5: Description Quality
+### Check 5: Alias Sync
 
-Sample 10 random files that have descriptions. For each, check:
-- Does the description just paraphrase the title? (Flag as "weak filter")
-- Is the description under 50 chars? (Flag as "too short")
-- Is the description over 200 chars? (Flag as "too long")
+For graph nodes with `file:` pointers whose canonical page has an `aliases:`
+frontmatter field, compare the page aliases to the graph aliases. Flag
+mismatches.
 
-### Check 6: Index Freshness
+### Check 6: Frontmatter Referential Integrity
 
-Check `Context/Memory/active-tasks.md` frontmatter for `generated:` date. If older than 7 days, flag as stale.
+Scan files with `people:`, `projects:`, or `channels:` arrays and ensure every
+id resolves to an existing graph node of the right type:
 
-### Check 7: Contradictions
-
-Scan domain indexes (`Context/Memory/*.md`) for claims that conflict with more recent raw sources (Meeting Notes, Knowledge files). For each domain index, compare its key assertions against files modified in the last 30 days that share the same topics. Flag where newer evidence contradicts the index.
-
-### Check 8: Stale Claims
-
-For each domain index in `Context/Memory/`, check whether linked source files have been modified more recently than the index's `generated:` date. If a source was updated but the index wasn't, the synthesis may be outdated. Report the index and the newer source.
-
-### Check 9: Missing Pages
-
-Scan `Tasks/`, `Context/Meeting Notes/`, and `Context/Document Hub/` for concepts or entities mentioned in 3+ files that don't have their own page in `Context/Knowledge/` or `Context/Memory/`. Look for repeated proper nouns, project names, or technical terms that appear across multiple files but lack a dedicated reference page.
+- `people` -> `person`
+- `projects` -> `project` or `initiative`
+- `channels` -> `channel`
 
 ### Output Format
 
-```
+```text
 ## System Health Report — [date]
 
 ### Descriptions
-- [X] files missing descriptions (out of [total])
-- Top 10 to enrich: [list]
+- [X] files missing descriptions
 
-### Topics
-- [X] files missing topics
+### Links
+- [X] broken links or disconnected active files
 
-### Orphan Files
-- [X] knowledge files not in any domain index
-
-### Stale Links
-- [X] domain index links pointing to missing files
-
-### Description Quality
-- [X] weak filters (paraphrase title)
-- [X] too short
-- [X] too long
-
-### Index Freshness
-- Last rebuilt: [date] — [fresh/stale]
-
-### Contradictions
-- [X] domain index claims conflicting with newer sources
-
-### Stale Claims
-- [X] domain indexes with sources updated after last rebuild
-
-### Missing Pages
-- [X] concepts referenced in 3+ files without their own page
+### Graph
+- Summary: [X] nodes, [X] edges — YAML [OK/FAIL]
+- Integrity: [X] missing endpoints, unknown edge types, broken file pointers
+- Coverage: [X] canonical pages missing nodes; [X] isolated nodes
+- Alias Sync: [X] page aliases drifting from graph aliases
+- Referential Integrity: [X] invalid people/projects/channels ids
 
 ### Recommended Actions
-1. Run `/enrich` on the top 10 files missing descriptions
-2. Run `/rebuild-indexes` if indexes are stale
-3. [Any other specific recommendations]
+1. Run `/enrich` on the top files missing descriptions or relationship metadata
+2. Fix graph file pointers or alias mismatches before trusting structured lookups
+3. Run `/link-audit` if the workspace still has disconnected docs or tasks
 ```
 
-Ask: "Want me to fix any of these? I can run `/enrich` on the files missing descriptions."
+Ask: "Want me to fix any of these?"

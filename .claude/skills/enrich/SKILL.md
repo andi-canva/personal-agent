@@ -1,6 +1,6 @@
 ---
 name: enrich
-description: "Auto-generate or update description, type, and topics for a file. The gradual enrichment tool for touching files as you use them."
+description: "Auto-generate or update description, type, topics, aliases, and graph-backed relationship fields for a file."
 ---
 
 # Enrich
@@ -22,7 +22,8 @@ When the user invokes `/enrich [file]` or `/enrich` (no argument):
 
 1. Read the file fully
 2. Check existing frontmatter — what fields are present vs missing
-3. Auto-generate missing fields:
+3. Read `Context/Memory/graph.yaml` if it exists before proposing any relational metadata so you can resolve names against canonical node ids and aliases.
+4. Auto-generate missing fields:
 
    **`description`** (~150 chars): A retrieval filter, not a summary. It answers "should I load this file?" Include what makes the content distinctive — mechanism, scope, or implication. Must differ meaningfully from the title.
 
@@ -33,21 +34,35 @@ When the user invokes `/enrich [file]` or `/enrich` (no argument):
 
    **`maturity`** (knowledge files only): seedling | developing | evergreen
 
-4. Present the proposed frontmatter to the user:
+   **`aliases`** (canonical person / project pages only): shorthand or alternate names already used elsewhere in the workspace. Prefer `[]` over guessing.
+
+   **`people` / `projects` / `channels`** (task and meeting-note files only): arrays of graph node ids from `Context/Memory/graph.yaml`
+   - Only include ids that are explicit in the file or strongly implied by structured sections like attendees, DACI tables, or named Slack channels
+   - Use snake_case graph node ids only
+   - If a name does not resolve to an existing node, do **not** invent one silently. Surface it as an unresolved suggestion for the user to confirm.
+
+5. Present the proposed frontmatter to the user:
    ```
    Proposed enrichment for [filename]:
    - description: "[generated description]"
    - type: [type]
    - topics: [topics]
+   - aliases: [aliases if relevant]
+   - people: [people ids if relevant]
+   - projects: [project ids if relevant]
+   - channels: [channel ids if relevant]
    ```
-5. Ask: "Look good, or should I adjust anything?"
-6. On confirmation, update the file's frontmatter (preserve all existing fields and content)
+6. If any names were unresolved, list them under `Unresolved references:` and ask whether to add graph nodes or leave them out for now.
+7. Ask: "Look good, or should I adjust anything?"
+8. On confirmation, update the file's frontmatter (preserve all existing fields and content)
 
 ### Quality Checks
 
 - Description must NOT just paraphrase the title — it should add mechanism, scope, or implication
 - Description should help an agent choose THIS file over similar files on related topics
 - Topics should use the canonical vocabulary, not free-form tags
+- `people` / `projects` / `channels` must use graph node ids only — never display names
+- Unresolved people, projects, or channels must be surfaced for confirmation rather than guessed
 
 ## Batch Mode
 

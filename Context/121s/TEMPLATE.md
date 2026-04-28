@@ -3,6 +3,7 @@ title: "121 — [Person Name]"
 description: "[Role/team] — ongoing 1:1 relationship doc with talking points, decisions, and open loops"
 type: knowledge
 topics: ["leadership"]
+aliases: []
 created_date: YYYY-MM-DD
 ---
 
@@ -44,4 +45,4 @@ _Unresolved items carried forward across sessions. Updated by `/121` on each run
 
 ---
 
-_This file is maintained by `/121` and `/today`. You can also edit it manually._
+_This file is maintained by `/121` and `/today`. `aliases: []` is optional but helps the relationship graph resolve shorthand names._

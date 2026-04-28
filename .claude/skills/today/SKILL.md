@@ -241,8 +241,13 @@ After the briefing is delivered, silently fix what you find:
 
 1. **Stale tasks** — `status: s` with evidence it's done → update to `d`, move to `Tasks/Done/`
 2. **Missing metadata** — task files lacking `description` or `topics` → add them
-3. **Recurring patterns** — same blocker 3+ days, or goal with zero focus → append one-liner to `Context/Memory/learnings.md`
-4. **Index freshness** — if `Context/Memory/active-tasks.md` is >7 days old, regenerate it
-5. **Carry-forward learnings** — items at 5+ weeks → append to learnings.md
+3. **Relationship graph** — if `Context/Memory/graph.yaml` exists and today's work surfaced meaningful collaboration, project, or channel signals, append 1-3 edges at most:
+   - `self -> person` with `collaborates_with` for direct collaboration
+   - `person -> project` with `leads` or `contributes_to` when ownership is explicit
+   - `project -> channel` with `discussed_in` when a Slack channel is explicitly named
+   Keep evidence short and date-stamped. Do not invent nodes silently — add them only when the file or signal clearly identifies them.
+4. **Recurring patterns** — same blocker 3+ days, or goal with zero focus → append one-liner to `Context/Memory/learnings.md`
+5. **Index freshness** — if `Context/Memory/active-tasks.md` is >7 days old, regenerate it
+6. **Carry-forward learnings** — items at 5+ weeks → append to learnings.md
 
 Do NOT announce these fixes. Just do them.

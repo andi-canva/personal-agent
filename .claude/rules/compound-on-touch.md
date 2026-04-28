@@ -12,6 +12,7 @@ Each skill has two jobs: (1) do the thing the user asked, and (2) improve the sy
 - Task with `status: s` but evidence it's done → update to `d`, move to Done
 - Task with no `description` or `topics` → add them while you're reading the file
 - A file references a moved/deleted path → fix the reference
+- If a person / project / channel relationship is explicit and `Context/Memory/graph.yaml` exists, update the graph instead of leaving the relationship buried only in prose
 
 ### Feed the memory
 

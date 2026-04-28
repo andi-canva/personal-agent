@@ -29,11 +29,15 @@ If Slack MCP is unavailable AND no calendar history exists, fall back to: "No DM
 ### Step 1: Gather Context on This Person
 
 1. Check `Context/121s/[Person Name].md` — if it exists, read the open loops and recent session log entries first (this is the richest source)
-2. Search `Context/Meeting Notes/` for recent notes mentioning this person
-3. Search `Context/Document Hub/` for shared docs, PRDs, or projects involving them
-4. Check `GOALS.md` — identify which goals this person is connected to (e.g., key relationships, team members, stakeholders)
-5. Check `Context/Memory/` for any stored preferences or notes about working with this person
-6. If MCP tools are available, use the `slack_user_id`, `slack_dm_channel`, and `slack_canvas_id` from the frontmatter to directly fetch recent DMs and read/update the shared canvas — skip searching if these fields are populated. If any field is empty, search Slack to find it and backfill the frontmatter for next time.
+2. Read `Context/Memory/graph.yaml` if it exists — find edges where `source` or `target` matches this person's node id. Surface:
+   - Recent collaborators
+   - Shared projects
+   - Active channels
+3. Search `Context/Meeting Notes/` for recent notes mentioning this person
+4. Search `Context/Document Hub/` for shared docs, PRDs, or projects involving them
+5. Check `GOALS.md` — identify which goals this person is connected to (e.g., key relationships, team members, stakeholders)
+6. Check `Context/Memory/` for any stored preferences or notes about working with this person
+7. If MCP tools are available, use the `slack_user_id`, `slack_dm_channel`, and `slack_canvas_id` from the frontmatter to directly fetch recent DMs and read/update the shared canvas — skip searching if these fields are populated. If any field is empty, search Slack to find it and backfill the frontmatter for next time.
 
 ### Step 2: Review Your Recent Work
 
@@ -63,6 +67,7 @@ title: "121 — [Person Name]"
 description: "[Role/team] — ongoing 1:1 relationship doc with talking points, decisions, and open loops"
 type: knowledge
 topics: ["leadership"]
+aliases: []
 created_date: YYYY-MM-DD
 slack_user_id: "" # Their Slack user ID (e.g. U027T704S5N) — look up via slack_search_users
 slack_dm_channel: "" # DM channel ID (e.g. D06RMTHAYU9) — found in Slack search results for DMs
@@ -100,7 +105,20 @@ _Unresolved items carried forward across sessions._
 
 The "Outcomes" field starts empty — it gets filled when the user debriefs after the meeting, or when `/today` finds evidence in Slack/meeting notes the next day.
 
-### Step 6: Confirm
+### Step 6: Update The Relationship Graph
+
+If `Context/Memory/graph.yaml` exists, keep the structured relationship layer in sync:
+
+1. Resolve the person's node id from the canonical file name (snake_case)
+2. Ensure the person node exists with:
+   - `type: person`
+   - `file: "Context/121s/[Person Name].md"`
+   - `aliases:` pulled from the page frontmatter if present
+3. Ensure the `self -> person` edge exists with `type: collaborates_with`
+4. If it exists, bump `weight` by 0.1 (cap 1.0), update `last_seen`, and append one evidence line like `"1:1 YYYY-MM-DD"`
+5. Keep evidence to 5 lines max — drop the oldest when adding a new one
+
+### Step 7: Confirm
 
 Present the talking points and ask: "Anything to add or adjust?"
 

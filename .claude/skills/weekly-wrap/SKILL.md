@@ -216,6 +216,7 @@ Each wrap should make the next one better:
 1. Run a quick internal check (do NOT include in wrap output — this is housekeeping, not reader-facing):
    - Count active task files (Tasks/ root, not Done/) missing `description` field
    - Check if `Context/Memory/active-tasks.md` is older than 7 days
+   - If `Context/Memory/graph.yaml` exists, capture node / edge counts and note stale or orphaned graph entries
 
 2. **Archive the week file:**
    - Move `Tasks/Week-YYYY-WNN.md` to `Tasks/Done/Week-YYYY-WNN.md`
@@ -239,7 +240,13 @@ Each wrap should make the next one better:
    - Stakeholder insights → flag for `Context/Reference/stakeholders.md`
    - Report: "Promotable outputs: [list with suggested destinations]" — let the user confirm before promoting
 
-6. If indexes are stale (>7 days), run `/rebuild-indexes`
+6. **Graph maintenance** — if `Context/Memory/graph.yaml` exists:
+   - Halve the weight of any edge whose `last_seen` is older than 4 weeks
+   - Prune edges with weight below 0.1 after decay
+   - Remove orphan nodes with no incident edges only if they do **not** have a `file:` pointer
+   - Report: "Graph: N nodes, M edges. Decayed X, pruned Y."
+
+7. If your workspace uses derived indexes and any are stale (>7 days), regenerate them or flag them for cleanup. Do not assume `/rebuild-indexes` exists.
 
 ---
 

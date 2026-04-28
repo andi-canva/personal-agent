@@ -12,6 +12,9 @@ description: "[~150 chars — what makes this task distinctive and findable]"
 type: task
 category: [technical|outreach|research|writing|content|admin|personal|other]
 topics: ["topic-1", "topic-2"]  # from topic vocabulary
+people: []      # optional; graph node ids from Context/Memory/graph.yaml
+projects: []    # optional; graph node ids from Context/Memory/graph.yaml
+channels: []    # optional; graph node ids from Context/Memory/graph.yaml
 priority: [P0|P1|P2|P3]
 status: n  # n=not_started (s=started, b=blocked, d=done)
 created_date: [YYYY-MM-DD]
@@ -41,6 +44,7 @@ title: [Descriptive name]
 description: "[~150 chars — what insight or framework this captures and why it matters]"
 type: knowledge
 topics: ["strategy", "product-craft"]
+aliases: []  # optional; alternate names already used in the workspace
 maturity: seedling  # seedling | developing | evergreen
 created_date: [YYYY-MM-DD]
 resource_refs: []
@@ -59,6 +63,9 @@ title: [Meeting name — attendees or topic]
 description: "[~150 chars — key decisions or outcomes from this meeting]"
 type: meeting-note
 topics: ["topic-1", "topic-2"]
+people: []      # optional; graph node ids from Context/Memory/graph.yaml
+projects: []    # optional; graph node ids from Context/Memory/graph.yaml
+channels: []    # optional; graph node ids from Context/Memory/graph.yaml
 created_date: [YYYY-MM-DD]
 ---
 
